@@ -1,0 +1,188 @@
+﻿@page "/"
+@using ComputerLock.Enums
+@using JiuLing.CommonLibs.ExtensionMethods
+
+<style>
+    .dialog-blurry {
+        backdrop-filter: blur(10px);
+    }
+</style>
+
+
+@* 
+<MudSwitch @bind-Value="@(AppSettings.LockAnimation)"
+           @bind-Value:after="SaveSettings"
+           Label="@(Lang["LockAnimation"])"
+           Color="Color.Success" /> 
+ *@
+@* <div class="d-flex align-center">
+    <MudSwitch @bind-Value="@(AppSettings.EnablePasswordBox)"
+               @bind-Value:after="SaveSettings"
+               Label="@(Lang["EnablePasswordBox"])"
+               Color="Color.Primary" />
+    @if (!AppSettings.EnablePasswordBox)
+    {
+        <MudChip Label="true"
+                 Icon="@Icons.Material.Filled.WarningAmber"
+                 IconColor="Color.Primary"
+                 DisableRipple="true"
+                 Size="Size.Small">
+            @(Lang["EnablePasswordBoxTips"])
+        </MudChip>
+    }
+</div>
+
+<MudSwitch @bind-Value="@(AppSettings.IsHidePasswordWindow)"
+           @bind-Value:after="SaveSettings"
+           Class="ml-6"
+           Disabled="@(!AppSettings.EnablePasswordBox)"
+           Label="@(Lang["HidePasswordWindow"])"
+           Color="Color.Primary" />
+
+<MudSwitch @bind-Value="@(_keyboardDownChecked)"
+           @bind-Value:after="KeyboardDownChecked"
+           Class="ml-6"
+           Disabled="@(!AppSettings.EnablePasswordBox)"
+           Label="@(Lang["KeyboardDownActivePwd"])"
+           Color="Color.Primary" />
+
+<MudSwitch @bind-Value="@(_mouseDownChecked)"
+           @bind-Value:after="MouseDownChecked"
+           Class="ml-6"
+           Disabled="@(!AppSettings.EnablePasswordBox)"
+           Label="@(Lang["MouseDownActivePwd"])"
+           Color="Color.Primary" /> *@
+
+<MudGrid>
+    <MudItem xs="6">
+        <div class="d-flex align-center">
+            <MudSwitch 
+                @bind-Value="@(AppSettings.LockOnStartup)"
+                @bind-Value:after="SaveSettings"
+                Label="@(Lang["LockOnStartup"])"
+                Color="Color.Primary"
+                style="font-size: 16px;" 
+            />
+        </div>
+    </MudItem>
+    <MudItem xs="6">
+        <div class="d-flex align-center">
+            <MudText style="font-size: 16px;" Class="mr-3">@(Lang["LockShortcutKey"])</MudText> <!-- 设置字体大小为 14px -->
+            <MudButton
+                Class="mr-3"
+                Variant="Variant.Text"
+                Size="Size.Small"
+                Color="Color.Primary"
+                OnClick="SetShortcutKey"
+                style="font-size: 16px;"
+            >
+                @(_shortcutKeyText)
+            </MudButton>
+            @if (AppSettings.ShortcutKeyForLock.IsNotEmpty())
+            {
+                <MudTooltip Text="删除快捷键" Delay="600">
+                    <MudIconButton 
+                        Icon="@Icons.Material.Filled.Delete"
+                        Size="Size.Small"
+                        Color="Color.Secondary"
+                        OnClick="ClearShortcutKey"
+                        style="font-size: 14px;" 
+                    />
+                </MudTooltip>
+            }
+        </div>
+    </MudItem>
+</MudGrid>
+
+
+
+
+<MudGrid>
+    <MudItem xs="6">
+        <MudSelect T="int"
+                   Label="@(Lang["AutoLock"])"
+                   Value="@(AppSettings.AutoLockSecond)"
+                   Class="mt-4"
+                   ValueChanged="AutoLockChanged"
+                   Dense="true">
+            <MudSelectItem Value="0">@(Lang["Never"])</MudSelectItem>
+            <MudSelectItem Value="60">@(Lang["Minute1"])</MudSelectItem>
+            <MudSelectItem Value="120">@(Lang["Minute2"])</MudSelectItem>
+            <MudSelectItem Value="180">@(Lang["Minute3"])</MudSelectItem>
+            <MudSelectItem Value="300">@(Lang["Minute5"])</MudSelectItem>
+            <MudSelectItem Value="600">@(Lang["Minute10"])</MudSelectItem>
+        </MudSelect>
+    </MudItem>
+    <MudItem xs="6">
+        <MudSelect T="ScreenLocationEnum"
+                   Label="@(Lang["PwdLocation"])"
+                   Value="@(AppSettings.PasswordInputLocation)"
+                   Disabled="@(!AppSettings.EnablePasswordBox)"
+                   Class="mt-4"
+                   ValueChanged="PwdBoxLocationChanged"
+                   Dense="true">
+            <MudSelectItem Value="@(ScreenLocationEnum.Center)">@(Lang["Center"])</MudSelectItem>
+            <MudSelectItem Value="@(ScreenLocationEnum.TopLeft)">@(Lang["TopLeft"])</MudSelectItem>
+            <MudSelectItem Value="@(ScreenLocationEnum.TopRight)">@(Lang["TopRight"])</MudSelectItem>
+            <MudSelectItem Value="@(ScreenLocationEnum.BottomLeft)">@(Lang["BottomLeft"])</MudSelectItem>
+            <MudSelectItem Value="@(ScreenLocationEnum.BottomRight)">@(Lang["BottomRight"])</MudSelectItem>
+        </MudSelect>
+    </MudItem>
+</MudGrid>
+
+<MudGrid>
+    <MudItem xs="6">
+        <MudButton
+            Class="mt-4"
+            Variant="Variant.Filled"
+            Color="Color.Primary"
+            Size="Size.Small"
+            OnClick="SetPassword"
+            Style="width: 100%;"
+        >
+            修改密码
+        </MudButton>
+        @if (!AppSettings.IsPasswordChanged)
+        {
+            <MudText Typo="Typo.caption" Class="text-center">
+                @(Lang["PasswordTip"])
+            </MudText>
+        }
+    </MudItem>
+    <MudItem xs="6">
+        <MudButton
+             Class="mt-4"
+            Variant="Variant.Filled"
+            Color="Color.Primary"
+            Size="Size.Small"
+            OnClick="AdminSetPassword"
+            Style="width: 100%;"
+        >
+            密码找回
+        </MudButton>
+    </MudItem>
+</MudGrid>
+
+@* <div class="d-flex align-center mt-4">
+    <MudButton Class="mr-3"
+               Variant="Variant.Text"
+               Size="Size.Small"
+               Color="Color.Primary"
+               OnClick="SetPassword">
+        修改密码
+    </MudButton>
+    @if (!AppSettings.IsPasswordChanged)
+    {
+        <MudText Typo="Typo.caption">@(Lang["PasswordTip"])</MudText>
+    }
+      <MudButton Class="mr-3"
+               Variant="Variant.Text"
+               Size="Size.Small"
+               Color="Color.Primary"
+               OnClick="SetPassword">
+        密码找回
+    </MudButton>
+</div>  *@
+<div  Class="mt-4" style="font-family: 'arial', sans-serif; font-size: 14px; color: white; text-align: center; padding: 10px; border: 1px solid #ccc; position: fixed; left: 50%; transform: translatex(-50%); width: 400px;">
+    Design by 江汉油田总医院信息科
+</div>
