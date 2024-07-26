@@ -31,7 +31,12 @@ public partial class Setting
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+        if (!AutostartHook.IsAutostart())
+        {
+            AutostartHook.EnabledAutostart();
+        }
         _isAutostart = AutostartHook.IsAutostart();
+       
         _version = "V1.3";
     }
 

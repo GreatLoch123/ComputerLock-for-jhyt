@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<Authors>罗楚豪</Authors>
 		<Product>江汉油田总医院锁屏</Product>
-		<Version>1.3</Version>
+		<Version>1.3</Version>	
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<Nullable>enable</Nullable>

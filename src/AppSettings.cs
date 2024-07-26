@@ -33,7 +33,7 @@ public class AppSettings
     /// <summary>
     /// 自动锁定的秒数
     /// </summary>
-    public int AutoLockSecond { get; set; } = 0;
+    public int AutoLockSecond { get; set; } = 300;
 
     /// <summary>
     /// 密码框的位置
