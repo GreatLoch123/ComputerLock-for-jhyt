@@ -28,7 +28,7 @@
 
     <Grid MouseDown="PasswordBlock_MouseDown">
         <Grid.Background>
-            <ImageBrush ImageSource="/Resources/1.jpg"/>
+            <ImageBrush ImageSource="{Binding ImagePath}"/>
         </Grid.Background>
         <Border Width="230"
                 Height="55"

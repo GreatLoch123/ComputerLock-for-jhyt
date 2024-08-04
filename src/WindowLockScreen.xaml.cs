@@ -1,6 +1,8 @@
 ﻿using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 using System.Windows.Threading;
 using Point = System.Windows.Point;
 
@@ -17,7 +19,10 @@ public partial class WindowLockScreen : Window
     private readonly AppSettings _appSettings;
     private readonly IStringLocalizer<Lang> _lang;
     private readonly ILogger _logger;
-
+    private DispatcherTimer mainTimer;
+    private DispatcherTimer wallpaperTimer;
+    private int currentImageIndex = 2;
+    private int totalImages = 18; // 假设你有18张图片
     public event EventHandler<EventArgs>? OnUnlock;
 
     /// <summary>
@@ -52,6 +57,8 @@ public partial class WindowLockScreen : Window
         _timer.Interval = TimeSpan.FromSeconds(1);
         _timer.Tick += Timer_Tick;
         _timer.Start();
+        InitializeWallpaperTimer();
+        UpdateWallpaper();
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -254,4 +261,31 @@ public partial class WindowLockScreen : Window
         _logger.Write("主屏幕 -> 准备执行解锁");
         ShowPassword();
     }
+    private void InitializeWallpaperTimer()
+    {
+        wallpaperTimer = new DispatcherTimer();
+        wallpaperTimer.Interval = TimeSpan.FromSeconds(3); // 壁纸计时器每30秒触发一次
+        wallpaperTimer.Tick += WallpaperTimer_Tick;
+        wallpaperTimer.Start();
+    }
+    private void WallpaperTimer_Tick(object sender, EventArgs e)
+    {
+        UpdateWallpaper();
+    }
+    private void UpdateWallpaper()
+    {
+        // 构建相对路径的 URI
+        string imagePath = $"pack://application:,,,/Resources/{currentImageIndex}.png";
+        ImageBrush imageBrush = new ImageBrush
+        {
+            ImageSource = new BitmapImage(new Uri(imagePath, UriKind.Absolute))
+        };
+        this.Background = imageBrush;
+        currentImageIndex++;
+        if (currentImageIndex > totalImages)
+        {
+            currentImageIndex = 2;
+        }
+    }
+
 }
