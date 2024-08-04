@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ComputerLock", "src\ComputerLock.csproj", "{B6A9D5A0-CD0F-4D7B-AD6A-9B66F433627B}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup1", "Setup1\Setup1.vdproj", "{BC5148F2-0F15-4DFC-B025-E094B46E2A21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B6A9D5A0-CD0F-4D7B-AD6A-9B66F433627B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6A9D5A0-CD0F-4D7B-AD6A-9B66F433627B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6A9D5A0-CD0F-4D7B-AD6A-9B66F433627B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6A9D5A0-CD0F-4D7B-AD6A-9B66F433627B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC5148F2-0F15-4DFC-B025-E094B46E2A21}.Debug|Any CPU.ActiveCfg = Debug
+		{BC5148F2-0F15-4DFC-B025-E094B46E2A21}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84A8F2DF-E6F5-44C7-BCBE-2BC9CE9F3F03}
+		RESX_NeutralResourcesLanguage = zh-Hans
+	EndGlobalSection
+EndGlobal

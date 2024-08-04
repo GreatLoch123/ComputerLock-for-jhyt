@@ -1,0 +1,75 @@
+﻿<Window x:Class="ComputerLock.WindowLockScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="测试锁屏"
+        WindowStyle="None"
+        Topmost="True"
+        WindowState="Maximized"
+        AllowsTransparency="True"
+        ShowInTaskbar="False"
+        Height="450"
+        Width="800"
+        Loaded="Window_Loaded"
+        SizeChanged="Window_SizeChanged"
+        Closing="Window_Closing"
+        KeyDown="Window_KeyDown"
+        >
+
+    <Window.Resources>
+        <Style x:Key="CustomPasswordBoxStyle" TargetType="PasswordBox">
+            <Setter Property="Background" Value="#B2FFFFFF"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid MouseDown="PasswordBlock_MouseDown">
+        <Grid.Background>
+            <ImageBrush ImageSource="/Resources/1.jpg"/>
+        </Grid.Background>
+        <Border Width="230"
+                Height="55"
+                x:Name="PasswordBlock"
+                Opacity="1"
+                CornerRadius="10"
+                BorderBrush="Transparent"
+                Background="#EAEAEA"
+                BorderThickness="1"
+                >
+            <Grid Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0"
+                       Grid.Column="0"
+                       Foreground="#000000"
+                       Opacity="0.5"                       
+                       x:Name="LblPassword"/>
+                <Label Grid.Row="0"
+                       Grid.Column="2"
+                       Foreground="#000000"
+                       Opacity="0.5"
+                       x:Name="LblMessage"/>
+
+                <PasswordBox Grid.Row="2"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="3"
+                             x:Name="TxtPassword"
+                             Style="{StaticResource CustomPasswordBoxStyle}"
+                             PasswordChanged="TxtPassword_PasswordChanged"
+                             KeyDown="TxtPassword_KeyDown"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
