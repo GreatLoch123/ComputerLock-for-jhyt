@@ -241,6 +241,7 @@ public partial class WindowLockScreen : Window
     {
         _logger.Write($"主屏幕 -> 准备关闭");
         _timer.Stop();
+        wallpaperTimer.Stop();
     }
 
     private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

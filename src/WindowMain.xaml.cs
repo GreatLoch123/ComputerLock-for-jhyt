@@ -5,7 +5,10 @@ using Microsoft.Win32;
 namespace ComputerLock;
 public partial class WindowMain : Window, IDisposable
 {
+
+
     private readonly KeyboardHook _keyboardHook;
+    private readonly AutostartHook _autostartHook;
     private readonly AppSettings _appSettings;
     private readonly UserActivityMonitor? _activityMonitor;
     private readonly ILocker _locker;

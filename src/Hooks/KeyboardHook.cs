@@ -132,6 +132,7 @@ namespace ComputerLock.Hooks
         {
             get { return _key; }
         }
+
     }
 
     /// <summary>

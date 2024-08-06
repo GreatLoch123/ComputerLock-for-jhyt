@@ -32,7 +32,8 @@
     }
 </div>
 
-<MudSwitch @bind-Value="@(AppSettings.IsHidePasswordWindow)"
+<MudSwitch @bind-Value="@(AppSettings.IsHidePassword
+dow)"
            @bind-Value:after="SaveSettings"
            Class="ml-6"
            Disabled="@(!AppSettings.EnablePasswordBox)"

@@ -27,7 +27,8 @@ public partial class Index
 
     [Inject]
     private ILogger Logger { get; set; } = default!;
-
+    [Inject]
+    private AutostartHook AutostartHook { get; set; } = default!;
     private bool _keyboardDownChecked;
     private bool _mouseDownChecked;
     private string _shortcutKeyText = "未设置";
@@ -37,6 +38,12 @@ public partial class Index
         _keyboardDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.KeyboardDown) == PasswordBoxActiveMethodEnum.KeyboardDown;
         _mouseDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.MouseDown) == PasswordBoxActiveMethodEnum.MouseDown;
         UpdateShortcutKeyForLock();
+        if(AppSettings.Fisrtload==1)
+        {
+            AutostartHook.EnabledAutostart();
+            AutostartHook.DisableWindowsLockScreen();
+            AppSettings.Fisrtload = 0;
+        }
 
         KeyboardHook.KeyPressed += (_, _) =>
         {
