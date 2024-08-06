@@ -1,9 +1,4 @@
-﻿## 透明锁屏 (Transparent Lock Screen)  
-一个 `Windows` 下另类的锁屏工具。  
-A screen lock tool for Windows.  
-
-<img src="https://github.com/JiuLing-zhang/ComputerLock/raw/main/resources/app.png" width="40%">
-<img src="https://github.com/JiuLing-zhang/ComputerLock/raw/main/resources/app_en.png" width="40%">
+﻿## 医院专用锁屏 ( Lock Screen)  
 
 ## 功能介绍 (Features)  
 <table>
@@ -12,11 +7,11 @@ A screen lock tool for Windows.
         <td>✔️</td>
     </tr>
     <tr>
-        <td>透明锁屏</br>Transparent Lock</td>
+        <td>自动切换锁屏壁纸</br>Transparent Lock</td>
         <td>✔️</td>
     </tr>
     <tr>
-        <td>禁用 Windows 锁屏</br>Disable Windows lock screen</td>
+        <td>禁用 Windows 锁屏快捷键</br>Disable Windows lock screen</td>
         <td>✔️</td>
     </tr>
     <tr>
