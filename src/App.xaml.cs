@@ -54,11 +54,13 @@ public partial class App : Application
 
         services.AddSingleton(LogManager.GetLogger());
         services.AddSingleton<KeyboardHook>();
+        services.AddSingleton<MemoryCleaner>();
         services.AddSingleton<AutostartHook>();
         services.AddSingleton<TaskManagerHook>();
         services.AddSingleton<UserActivityMonitor>();
         services.AddSingleton<WindowMain>();
         services.AddTransient<WindowLockScreen>();
+
         services.AddTransient<WindowBlankScreen>();
         services.AddSingleton<LockService>();
         services.AddSingleton<IWindowMoving, WindowMoving>();

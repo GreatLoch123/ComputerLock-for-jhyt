@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 
 namespace ComputerLock.Hooks;
-internal class AutostartHook 
+public class AutostartHook 
 {
     private const string RegKey = @"Software\WOW6432Node\Microsoft\Windows\CurrentVersion\Run";
     private const string RegKeySystem = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";

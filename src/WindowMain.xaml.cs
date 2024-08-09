@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
+using ComputerLock.Hooks;
 using Microsoft.Win32;
 
 namespace ComputerLock;
@@ -9,6 +10,7 @@ public partial class WindowMain : Window, IDisposable
 
     private readonly KeyboardHook _keyboardHook;
     private readonly AutostartHook _autostartHook;
+    private readonly MemoryCleaner _memoryCleaner;
     private readonly AppSettings _appSettings;
     private readonly UserActivityMonitor? _activityMonitor;
     private readonly ILocker _locker;
@@ -17,18 +19,26 @@ public partial class WindowMain : Window, IDisposable
     private readonly NotifyIcon _notifyIcon = new();
     private readonly ContextMenuStrip _contextMenuStrip = new();
 
-    public WindowMain(KeyboardHook keyboardHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger)
+    public WindowMain(KeyboardHook keyboardHook, MemoryCleaner memoryCleaner, AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger)
     {
         InitializeComponent();
-
+        _autostartHook= autostartHook;
         _keyboardHook = keyboardHook;
         _appSettings = appSettings;
+        _memoryCleaner = memoryCleaner;
         _locker = locker;
         _logger = logger;
 
         InitializeNotifyIcon();
         _logger.Write("系统启动");
-
+        if (_appSettings.Fisrtload == 1)
+        {
+            _autostartHook.EnabledAutostart();
+            logger.Write("执行成功");
+            _autostartHook.DisableWindowsLockScreen();
+            _appSettings.Fisrtload = 0;
+        }
+       
         if (_appSettings.AutoLockSecond != 0)
         {
             _logger.Write("自动锁定已生效");
@@ -104,6 +114,7 @@ public partial class WindowMain : Window, IDisposable
         {
             _logger.Write("托盘关闭");
             System.Windows.Application.Current.Shutdown();
+            MemoryCleaner.ClearMemory();
         };
         _contextMenuStrip.Items.Add(btnClose);
 
@@ -145,6 +156,7 @@ public partial class WindowMain : Window, IDisposable
             this.WindowState = WindowState.Minimized;
             e.Cancel = true;
         }
+        MemoryCleaner.ClearMemory();
     }
     private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
