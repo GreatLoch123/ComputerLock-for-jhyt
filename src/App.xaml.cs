@@ -55,6 +55,7 @@ public partial class App : Application
         services.AddSingleton(LogManager.GetLogger());
         services.AddSingleton<KeyboardHook>();
         services.AddSingleton<AutostartHook>();
+        services.AddSingleton<SystemKeyHook>();
         services.AddSingleton<TaskManagerHook>();
         services.AddSingleton<UserActivityMonitor>();
         services.AddSingleton<WindowMain>();

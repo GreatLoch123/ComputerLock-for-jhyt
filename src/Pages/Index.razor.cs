@@ -38,13 +38,6 @@ public partial class Index
         _keyboardDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.KeyboardDown) == PasswordBoxActiveMethodEnum.KeyboardDown;
         _mouseDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.MouseDown) == PasswordBoxActiveMethodEnum.MouseDown;
         UpdateShortcutKeyForLock();
-        if(AppSettings.Fisrtload==1)
-        {
-            AutostartHook.EnabledAutostart();
-            AutostartHook.DisableWindowsLockScreen();
-            AppSettings.Fisrtload = 0;
-        }
-
         KeyboardHook.KeyPressed += (_, _) =>
         {
             Logger.Write("快捷键解锁");
@@ -202,6 +195,11 @@ public partial class Index
                 {
                     keys |= ModifierKeys.Alt;
                 }
+                if (AppSettings.ShortcutKeyForLock.IndexOf("Win") >= 0)
+                {
+                    keys |= ModifierKeys.Win;
+                }
+
 
                 var result = RegexUtils.GetFirst(AppSettings.ShortcutKeyForLock, @"\d+");
                 if (result.success == false)

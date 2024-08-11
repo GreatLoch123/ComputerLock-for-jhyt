@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
 
 namespace ComputerLock.Hooks;
-internal class TaskManagerHook
+public class TaskManagerHook
 {
     private const string RegKey = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";
     private enum TaskManagerStateEnum

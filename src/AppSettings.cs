@@ -4,11 +4,11 @@ public class AppSettings
     /// <summary>
     /// 主题
     /// </summary>
-    public int AppThemeInt { get; set; } = 1;
+    public int AppThemeInt { get; set; } = 2;
     /// <summary>
     /// 关闭窗口时最小化到托
     /// </summary>
-    public bool IsHideWindowWhenClose { get; set; } = true;
+    public bool IsHideWindowWhenClose { get; set; } = false;
 
     /// <summary>
     /// 启动后最小化到托盘

@@ -3,11 +3,10 @@ using System.Windows;
 using System.Windows.Threading;
 
 namespace ComputerLock;
-internal class LockService
+public class LockService
 {
     private bool _isLocked = false;
     private readonly IServiceProvider _serviceProvider;
-    private readonly SystemKeyHook _systemKeyHook = new();
     private WindowLockScreen? _windowLockScreen;
     private readonly List<WindowBlankScreen> _blankScreens = [];
     private readonly IStringLocalizer<Lang> _lang;
@@ -53,7 +52,6 @@ internal class LockService
 
         _logger.Write("锁定服务 -> 禁用任务管理器和系统键");
         //_taskManagerHook.DisabledTaskManager();
-        _systemKeyHook.DisableSystemKey();
         if (_blankScreens.Count > 0)
         {
             _blankScreens.Clear();
@@ -105,8 +103,6 @@ internal class LockService
             screen.Close();
         }
         _logger.Write("锁定服务 -> 恢复任务管理器和系统键");
-        _taskManagerHook.EnabledTaskManager();
-        _systemKeyHook.Dispose();
         _isLocked = false;
         if (_appSettings.LockAnimation)
         {

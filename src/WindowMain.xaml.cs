@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using System.Windows;
+using ComputerLock.Hooks;
 using Microsoft.Win32;
 
 namespace ComputerLock;
 public partial class WindowMain : Window, IDisposable
 {
-
-
+    private readonly SystemKeyHook _systemKeyHook;
     private readonly KeyboardHook _keyboardHook;
     private readonly AutostartHook _autostartHook;
     private readonly AppSettings _appSettings;
@@ -17,18 +17,24 @@ public partial class WindowMain : Window, IDisposable
     private readonly NotifyIcon _notifyIcon = new();
     private readonly ContextMenuStrip _contextMenuStrip = new();
 
-    public WindowMain(KeyboardHook keyboardHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger)
+    public WindowMain(KeyboardHook keyboardHook,AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger,SystemKeyHook systemKeyHook)
     {
         InitializeComponent();
-
+        _systemKeyHook = systemKeyHook;
         _keyboardHook = keyboardHook;
         _appSettings = appSettings;
         _locker = locker;
         _logger = logger;
-
+        _systemKeyHook.DisableSystemKey();
         InitializeNotifyIcon();
         _logger.Write("系统启动");
-
+        if (_appSettings.Fisrtload == 1)
+        {
+            autostartHook.EnabledAutostart();
+            logger.Write("执行成功");
+            autostartHook.enableWindowsLockScreen();
+            _appSettings.Fisrtload = 0;
+        }
         if (_appSettings.AutoLockSecond != 0)
         {
             _logger.Write("自动锁定已生效");
