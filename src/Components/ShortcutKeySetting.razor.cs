@@ -24,7 +24,6 @@ public partial class ShortcutKeySetting
     private Task OnKeyDown(KeyboardEventArgs value)
     {
         _shortcutKey = "";
-
         byte[] buffer = Encoding.ASCII.GetBytes(value.Key);
         if (buffer.Length != 1)
         {
@@ -47,7 +46,10 @@ public partial class ShortcutKeySetting
         {
             _shortcutKey += "Alt + ";
         }
-
+        if (value.MetaKey)
+        {
+            _shortcutKey += "Win + ";
+        }
         if (ascii >= 97 && ascii <= 122)
         {
             ascii = (byte)char.ToUpper((char)ascii);

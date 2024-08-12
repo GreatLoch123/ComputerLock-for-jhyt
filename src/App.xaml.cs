@@ -56,6 +56,7 @@ public partial class App : Application
         services.AddSingleton<KeyboardHook>();
         services.AddSingleton<MemoryCleaner>();
         services.AddSingleton<AutostartHook>();
+        services.AddSingleton<SystemKeyHook>();
         services.AddSingleton<TaskManagerHook>();
         services.AddSingleton<UserActivityMonitor>();
         services.AddSingleton<WindowMain>();

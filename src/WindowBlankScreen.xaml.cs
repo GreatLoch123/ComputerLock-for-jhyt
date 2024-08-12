@@ -21,8 +21,8 @@ namespace ComputerLock
             _appSettings = appSettings;
             _logger = logger;
         }
-        
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+
+        public void Window_Loaded(object sender, RoutedEventArgs e)
         {
             _logger.Write("副屏幕 -> 准备锁定");
             WindowState = WindowState.Maximized;

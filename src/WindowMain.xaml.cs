@@ -6,8 +6,7 @@ using Microsoft.Win32;
 namespace ComputerLock;
 public partial class WindowMain : Window, IDisposable
 {
-
-
+    private readonly SystemKeyHook _systemKeyHook;
     private readonly KeyboardHook _keyboardHook;
     private readonly AutostartHook _autostartHook;
     private readonly MemoryCleaner _memoryCleaner;
@@ -19,16 +18,16 @@ public partial class WindowMain : Window, IDisposable
     private readonly NotifyIcon _notifyIcon = new();
     private readonly ContextMenuStrip _contextMenuStrip = new();
 
-    public WindowMain(KeyboardHook keyboardHook, MemoryCleaner memoryCleaner, AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger)
+
+    public WindowMain(KeyboardHook keyboardHook,AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger,SystemKeyHook systemKeyHook)
     {
         InitializeComponent();
-        _autostartHook= autostartHook;
+        _systemKeyHook = systemKeyHook;
         _keyboardHook = keyboardHook;
         _appSettings = appSettings;
-        _memoryCleaner = memoryCleaner;
         _locker = locker;
         _logger = logger;
-
+        _systemKeyHook.DisableSystemKey();
         InitializeNotifyIcon();
         _logger.Write("系统启动");
         if (_appSettings.Fisrtload == 1)

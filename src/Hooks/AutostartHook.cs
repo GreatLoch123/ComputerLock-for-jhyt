@@ -55,4 +55,26 @@ public class AutostartHook
             Console.WriteLine($"操作失败：{ex.Message}");
         }
     }
+    public void enableWindowsLockScreen()
+    {
+        try
+        {
+            using (RegistryKey key = Registry.CurrentUser.CreateSubKey(RegKeySystem))
+            {
+                if (key != null)
+                {
+                    key.SetValue("DisableLockWorkstation", 0, RegistryValueKind.DWord);
+                    Console.WriteLine("Windows 锁屏功能已禁用。");
+                }
+                else
+                {
+                    Console.WriteLine("无法创建或打开注册表项。");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"操作失败：{ex.Message}");
+        }
+    }
 }

@@ -193,6 +193,11 @@ public partial class Index
                 {
                     keys |= ModifierKeys.Alt;
                 }
+                if (AppSettings.ShortcutKeyForLock.IndexOf("Win") >= 0)
+                {
+                    keys |= ModifierKeys.Win;
+                }
+
 
                 var result = RegexUtils.GetFirst(AppSettings.ShortcutKeyForLock, @"\d+");
                 if (result.success == false)

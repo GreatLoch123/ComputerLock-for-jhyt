@@ -61,7 +61,7 @@ public partial class WindowLockScreen : Window
         UpdateWallpaper();
     }
 
-    private void Window_Loaded(object sender, RoutedEventArgs e)
+    public void Window_Loaded(object sender, RoutedEventArgs e)
     {
         _logger.Write("主屏幕 -> 准备锁定");
         LblPassword.Content = _lang["Password"];
@@ -265,7 +265,7 @@ public partial class WindowLockScreen : Window
     private void InitializeWallpaperTimer()
     {
         wallpaperTimer = new DispatcherTimer();
-        wallpaperTimer.Interval = TimeSpan.FromSeconds(3); // 壁纸计时器每30秒触发一次
+        wallpaperTimer.Interval = TimeSpan.FromSeconds(30); // 壁纸计时器每30秒触发一次
         wallpaperTimer.Tick += WallpaperTimer_Tick;
         wallpaperTimer.Start();
     }
