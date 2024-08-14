@@ -195,6 +195,14 @@ public partial class WindowLockScreen : Window
             _logger.Write("清空密码框");
             TxtPassword.Password = "";
         }
+        if (Keyboard.IsKeyToggled(Key.CapsLock))
+        {
+            LblCapsLockWarning.Visibility = Visibility.Visible; // 显示大写锁定提示
+        }
+        else
+        {
+            LblCapsLockWarning.Visibility = Visibility.Collapsed; // 隐藏大写锁定提示
+        }
     }
     private void DoMoveMouse()
     {
