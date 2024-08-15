@@ -31,7 +31,7 @@
             <ImageBrush ImageSource="{Binding ImagePath}"/>
         </Grid.Background>
         <Border Width="230"
-                Height="75"
+                Height="55"
                 x:Name="PasswordBlock"
                 Opacity="1"
                 CornerRadius="10"
@@ -62,19 +62,21 @@
                        Opacity="0.5"
                        x:Name="LblMessage"/>
                 <TextBlock x:Name="LblCapsLockWarning"
-                   Text="Caps Lock is ON"
+                   Text="大写输入已开启"
                    Foreground="Red"
+                   FontSize="15px"
                    Visibility="Collapsed"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Top"
-                   Margin="0,10,0,0" />
+                           Margin="40,0,0,0"
+                   />
                 <PasswordBox Grid.Row="2"
                              Grid.Column="0"
                              Grid.ColumnSpan="3"
                              x:Name="TxtPassword"
                              Style="{StaticResource CustomPasswordBoxStyle}"
                              PasswordChanged="TxtPassword_PasswordChanged"
-                             KeyDown="TxtPassword_KeyDown" Height="20"/>
+                             KeyDown="TxtPassword_KeyDown" Height="20" />
             </Grid>
         </Border>
     </Grid>
