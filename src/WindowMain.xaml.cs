@@ -12,67 +12,55 @@ public partial class WindowMain : Window, IDisposable
     private readonly AppSettings _appSettings;
     private readonly UserActivityMonitor? _activityMonitor;
     private readonly ILocker _locker;
-    private readonly ILogger _logger;
 
     private readonly NotifyIcon _notifyIcon = new();
     private readonly ContextMenuStrip _contextMenuStrip = new();
 
 
-    public WindowMain(AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger,SystemKeyHook systemKeyHook)
+    public WindowMain(AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor,SystemKeyHook systemKeyHook)
     {
         InitializeComponent();
         _systemKeyHook = systemKeyHook;
         _appSettings = appSettings;
         _locker = locker;
-        _logger = logger;
         _systemKeyHook.DisableSystemKey();
         InitializeNotifyIcon();
-        _logger.Write("系统启动");
         if (_appSettings.Fisrtload == 1)
         {
             _autostartHook.EnabledAutostart();
-            logger.Write("执行成功");
             _autostartHook.DisableWindowsLockScreen();
             _appSettings.Fisrtload = 0;
         }
        
         if (_appSettings.AutoLockSecond != 0)
         {
-            _logger.Write("自动锁定已生效");
             _activityMonitor = activityMonitor;
             _activityMonitor.Init(_appSettings.AutoLockSecond);
             _activityMonitor.OnIdle += (_, _) =>
             {
                 Dispatcher.Invoke(() =>
                 {
-                    _logger.Write("自动锁定 -> 锁定");
                     _locker.Lock();
                 });
             };
             _locker.OnLock += (_, _) =>
             {
-                _logger.Write("自动锁定 -> 暂停空闲检测");
                 _activityMonitor.StopMonitoring();
             };
             _locker.OnUnlock += (_, _) =>
             {
-                _logger.Write("自动锁定 -> 启动空闲检测");
                 _activityMonitor.StartMonitoring();
             };
-            _logger.Write("自动锁定 -> 启动空闲检测");
             _activityMonitor.StartMonitoring();
 
-            _logger.Write("自动锁定 -> 准备监控系统会话状态");
             SystemEvents.SessionSwitch += (_, e) =>
             {
                 if (e.Reason == SessionSwitchReason.SessionLock)
                 {
-                    _logger.Write("Windows系统锁定 -> 暂停空闲检测");
                     _activityMonitor.StopMonitoring();
                 }
                 else if (e.Reason == SessionSwitchReason.SessionUnlock)
                 {
-                    _logger.Write("Windows系统解锁 -> 启动空闲检测");
                     _activityMonitor.StartMonitoring();
                 }
             };
@@ -80,7 +68,6 @@ public partial class WindowMain : Window, IDisposable
 
         if (_appSettings.LockOnStartup)
         {
-            _logger.Write("程序启动时锁定屏幕");
             _locker.Lock();
         }
     }
@@ -101,7 +88,6 @@ public partial class WindowMain : Window, IDisposable
         var btnLock = new ToolStripMenuItem(Lang.DoLock);
         btnLock.Click += (_, _) =>
         {
-            _logger.Write("托盘锁定");
             _locker.Lock();
         };
         _contextMenuStrip.Items.Add(btnLock);
@@ -109,7 +95,6 @@ public partial class WindowMain : Window, IDisposable
         var btnClose = new ToolStripMenuItem(Lang.Exit);
         btnClose.Click += (_, _) =>
         {
-            _logger.Write("托盘关闭");
             System.Windows.Application.Current.Shutdown();
             MemoryCleaner.ClearMemory();
         };
@@ -165,7 +150,6 @@ public partial class WindowMain : Window, IDisposable
     }
     public void Dispose()
     {
-        _logger.Write("系统资源释放，系统关闭");
         _notifyIcon.Dispose();
         _activityMonitor?.Dispose();
     }

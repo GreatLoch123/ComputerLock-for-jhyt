@@ -49,8 +49,6 @@ public partial class App : Application
                 return new AppSettings();
             }
         });
-
-        services.AddSingleton(LogManager.GetLogger());
         services.AddSingleton<MemoryCleaner>();
         services.AddSingleton<AutostartHook>();
         services.AddSingleton<SystemKeyHook>();

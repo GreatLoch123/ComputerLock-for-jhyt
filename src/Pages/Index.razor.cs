@@ -23,8 +23,6 @@ public partial class Index
     [Inject]
     private IWindowTitleBar WindowTitleBar { get; set; } = default!;
 
-    [Inject]
-    private ILogger Logger { get; set; } = default!;
     private bool _keyboardDownChecked;
     private bool _mouseDownChecked;
     private string _shortcutKeyText = "未设置";

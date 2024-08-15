@@ -3,8 +3,6 @@ global using ComputerLock.Enums;
 global using ComputerLock.Hooks;
 global using ComputerLock.Platforms;
 global using JiuLing.CommonLibs.ExtensionMethods;
-global using JiuLing.CommonLibs.Log;
-global using JiuLing.CommonLibs.Text;
 global using MudBlazor;
 global using ComputerLock.Components;
 global using Microsoft.AspNetCore.Components;

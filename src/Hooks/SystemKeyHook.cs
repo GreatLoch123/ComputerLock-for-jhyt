@@ -19,7 +19,6 @@ namespace ComputerLock.Hooks
         private const int VK_L = 0x4C; // L 键
         private IntPtr _hookId = IntPtr.Zero;
         private readonly HookDelegate _hookCallback;
-        private readonly ILocker _locker;
         private bool _winKeyPressed = false;
         private readonly LockService _lockService;
         public delegate IntPtr HookDelegate(int nCode, IntPtr wParam, IntPtr lParam);
