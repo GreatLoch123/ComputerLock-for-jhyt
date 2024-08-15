@@ -12,20 +12,17 @@ public class LockService
     private readonly IStringLocalizer<Lang> _lang;
     private readonly AppSettings _appSettings;
     private readonly ILogger _logger;
-    private readonly TaskManagerHook _taskManagerHook;
     public event EventHandler? OnLock;
     public event EventHandler? OnUnlock;
-    public LockService(IServiceProvider serviceProvider, IStringLocalizer<Lang> lang, AppSettings appSettings, ILogger logger, TaskManagerHook taskManagerHook)
+    public LockService(IServiceProvider serviceProvider, IStringLocalizer<Lang> lang, AppSettings appSettings, ILogger logger)
     {
         _serviceProvider = serviceProvider;
         _lang = lang;
         _appSettings = appSettings;
         _logger = logger;
-        _taskManagerHook = taskManagerHook;
 
         // 防止锁屏时系统崩溃、重启等问题导致任务栏被禁用
         // 启动时默认启用一次
-        _taskManagerHook.EnabledTaskManager();
     }
 
     public void Lock()

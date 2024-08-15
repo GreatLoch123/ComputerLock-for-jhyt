@@ -7,7 +7,6 @@ namespace ComputerLock;
 public partial class WindowMain : Window, IDisposable
 {
     private readonly SystemKeyHook _systemKeyHook;
-    private readonly KeyboardHook _keyboardHook;
     private readonly AutostartHook _autostartHook;
     private readonly MemoryCleaner _memoryCleaner;
     private readonly AppSettings _appSettings;
@@ -19,11 +18,10 @@ public partial class WindowMain : Window, IDisposable
     private readonly ContextMenuStrip _contextMenuStrip = new();
 
 
-    public WindowMain(KeyboardHook keyboardHook,AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger,SystemKeyHook systemKeyHook)
+    public WindowMain(AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor, ILogger logger,SystemKeyHook systemKeyHook)
     {
         InitializeComponent();
         _systemKeyHook = systemKeyHook;
-        _keyboardHook = keyboardHook;
         _appSettings = appSettings;
         _locker = locker;
         _logger = logger;
@@ -170,6 +168,5 @@ public partial class WindowMain : Window, IDisposable
         _logger.Write("系统资源释放，系统关闭");
         _notifyIcon.Dispose();
         _activityMonitor?.Dispose();
-        _keyboardHook.Dispose();
     }
 }

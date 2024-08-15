@@ -5,7 +5,6 @@ using MudBlazor.Services;
 using System.Windows;
 using Application = System.Windows.Application;
 using System.Text.Json;
-
 namespace ComputerLock;
 /// <summary>
 /// Interaction logic for App.xaml
@@ -29,7 +28,6 @@ public partial class App : Application
         Init();
         base.OnStartup(e);
     }
-
     private void Init()
     {
         IServiceCollection services = new ServiceCollection();
@@ -53,15 +51,12 @@ public partial class App : Application
         });
 
         services.AddSingleton(LogManager.GetLogger());
-        services.AddSingleton<KeyboardHook>();
         services.AddSingleton<MemoryCleaner>();
         services.AddSingleton<AutostartHook>();
         services.AddSingleton<SystemKeyHook>();
-        services.AddSingleton<TaskManagerHook>();
         services.AddSingleton<UserActivityMonitor>();
         services.AddSingleton<WindowMain>();
         services.AddTransient<WindowLockScreen>();
-
         services.AddTransient<WindowBlankScreen>();
         services.AddSingleton<LockService>();
         services.AddSingleton<IWindowMoving, WindowMoving>();
@@ -78,15 +73,12 @@ public partial class App : Application
             config.SnackbarConfiguration.ShowTransitionDuration = 200;
             config.SnackbarConfiguration.HideTransitionDuration = 400;
         });
-
         var sp = services.BuildServiceProvider();
         Resources.Add("services", sp);
-
         var cultureInfo = new CultureInfo(sp.GetRequiredService<AppSettings>().Lang.ToString());
         CultureInfo.CurrentCulture = cultureInfo;
         Thread.CurrentThread.CurrentCulture = cultureInfo;
         Thread.CurrentThread.CurrentUICulture = cultureInfo;
-
         _mainWindow = sp.GetRequiredService<WindowMain>();
         Application.Current.MainWindow = _mainWindow;
         _mainWindow.Show();

@@ -19,8 +19,6 @@ public partial class Index
     [Inject]
     private ILocker Locker { get; set; } = default!;
 
-    [Inject]
-    private KeyboardHook KeyboardHook { get; set; } = default!;
 
     [Inject]
     private IWindowTitleBar WindowTitleBar { get; set; } = default!;
@@ -35,12 +33,6 @@ public partial class Index
         await base.OnInitializedAsync();
         _keyboardDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.KeyboardDown) == PasswordBoxActiveMethodEnum.KeyboardDown;
         _mouseDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.MouseDown) == PasswordBoxActiveMethodEnum.MouseDown;
-        UpdateShortcutKeyForLock();
-        KeyboardHook.KeyPressed += (_, _) =>
-        {
-            Logger.Write("快捷键解锁");
-            Locker.Lock();
-        };
 
     }
     private void KeyboardDownChecked()
@@ -149,74 +141,16 @@ public partial class Index
         AppSettings.ShortcutKeyForLock = shortcutKeyModel.ShortcutKey;
         AppSettings.ShortcutKeyDisplayForLock = shortcutKeyModel.ShortcutKeyDisplay;
         SaveSettings();
-        UpdateShortcutKeyForLock();
     }
     private Task ClearShortcutKey()
     {
         AppSettings.ShortcutKeyForLock = "";
         AppSettings.ShortcutKeyDisplayForLock = "";
         SaveSettings();
-        UpdateShortcutKeyForLock();
         return Task.CompletedTask;
     }
 
-    public void UpdateShortcutKeyForLock()
-    {
-        if (AppSettings.ShortcutKeyForLock.IsEmpty())
-        {
-            try
-            {
-                Logger.Write("释放锁屏热键");
-                KeyboardHook.UnregisterHotKey();
-            }
-            catch (Exception ex)
-            {
-                Logger.Write($"释放锁屏热键失败：{ex.Message}。{ex.StackTrace}");
-                //MessageBoxUtils.ShowError($"取消快捷键失败：{ex.Message}");
-            }
-            _shortcutKeyText = Lang["Invalid"];
-        }
-        else
-        {
-            try
-            {
-                ModifierKeys keys = 0;
-                if (AppSettings.ShortcutKeyForLock.IndexOf("Ctrl") >= 0)
-                {
-                    keys |= ModifierKeys.Control;
-                }
-                if (AppSettings.ShortcutKeyForLock.IndexOf("Shift") >= 0)
-                {
-                    keys |= ModifierKeys.Shift;
-                }
-                if (AppSettings.ShortcutKeyForLock.IndexOf("Alt") >= 0)
-                {
-                    keys |= ModifierKeys.Alt;
-                }
-                if (AppSettings.ShortcutKeyForLock.IndexOf("Win") >= 0)
-                {
-                    keys |= ModifierKeys.Win;
-                }
 
-
-                var result = RegexUtils.GetFirst(AppSettings.ShortcutKeyForLock, @"\d+");
-                if (result.success == false)
-                {
-                    throw new Exception(Lang["ShortcutKeyConfigError"]);
-                }
-                Logger.Write("注册锁屏热键");
-                Keys key = (Keys)Convert.ToInt32(result.result);
-                KeyboardHook.RegisterHotKey(keys, key);
-
-                _shortcutKeyText = AppSettings.ShortcutKeyDisplayForLock;
-            }
-            catch (Exception ex)
-            {
-                Logger.Write($"绑定锁屏热键失败：{ex.Message}。{ex.StackTrace}");
-                Snackbar.Add($"{Lang["ExRegistFailed"]}{ex.Message}", Severity.Error);
-            }
-        }
-    }
 
 
     private async Task SetPassword()
