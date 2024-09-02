@@ -230,7 +230,12 @@ public partial class WindowLockScreen : Window
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
         _timer.Stop();
+        _timer.Tick -= Timer_Tick;  // 清除事件处理程序
         wallpaperTimer.Stop();
+        wallpaperTimer.Tick -= WallpaperTimer_Tick;  // 清除事件处理程序
+        TxtPassword.PasswordChanged -= TxtPassword_PasswordChanged;
+        TxtPassword.KeyDown -= TxtPassword_KeyDown;
+        PasswordBlock.MouseDown -= PasswordBlock_MouseDown;
     }
 
     private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
@@ -261,6 +266,11 @@ public partial class WindowLockScreen : Window
     }
     private void UpdateWallpaper()
     {
+        if (this.Background is ImageBrush oldBrush)
+        {
+            oldBrush.ImageSource = null;
+            this.Background = null;
+        }
         // 构建相对路径的 URI
         string imagePath = $"pack://application:,,,/Resources/{currentImageIndex}.png";
         ImageBrush imageBrush = new ImageBrush
