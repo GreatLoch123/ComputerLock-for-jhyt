@@ -81,10 +81,17 @@ public partial class App : Application
         Application.Current.MainWindow = _mainWindow;
         _mainWindow.Show();
     }
-
+    public void CloseMainWindow()
+    {
+        if (Application.Current.MainWindow != null)
+        {
+            Application.Current.MainWindow.Close();
+        }
+    }
     protected override void OnExit(ExitEventArgs e)
     {
         _mainWindow?.Dispose();
         base.OnExit(e);
     }
+
 }

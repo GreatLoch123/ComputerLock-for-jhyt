@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using ComputerLock.Hooks;
 using Microsoft.Win32;
@@ -137,9 +138,25 @@ public partial class WindowMain : Window, IDisposable
         {
             this.WindowState = WindowState.Minimized;
             e.Cancel = true;
+            CloseWebView2Processes();
         }
-        MemoryCleaner.ClearMemory();
     }
+    private void CloseWebView2Processes()
+    {
+        var processes = Process.GetProcessesByName("msedgewebview2");
+        foreach (var process in processes)
+        {
+            try
+            {
+                process.Kill();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Failed to kill process {process.Id}: {ex.Message}");
+            }
+        }
+    }
+
     private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
         if (e.Key == System.Windows.Input.Key.Escape)

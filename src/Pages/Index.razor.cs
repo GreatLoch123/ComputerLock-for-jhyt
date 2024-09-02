@@ -25,7 +25,7 @@ public partial class Index
 
     private bool _keyboardDownChecked;
     private bool _mouseDownChecked;
-    private string _shortcutKeyText = "未设置";
+    private string _shortcutKeyText = "Win+L";
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
