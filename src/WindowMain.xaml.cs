@@ -13,18 +13,19 @@ public partial class WindowMain : Window, IDisposable
     private readonly AppSettings _appSettings;
     private readonly UserActivityMonitor? _activityMonitor;
     private readonly ILocker _locker;
-
+    private readonly IWindowTitleBar _IWindowTitleBar;
     private readonly NotifyIcon _notifyIcon = new();
     private readonly ContextMenuStrip _contextMenuStrip = new();
 
 
-    public WindowMain(AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor,SystemKeyHook systemKeyHook)
+    public WindowMain(AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor,SystemKeyHook systemKeyHook, IWindowTitleBar iWindowTitleBar)
     {
         InitializeComponent();
         _systemKeyHook = systemKeyHook;
         _appSettings = appSettings;
         _locker = locker;
         _systemKeyHook.DisableSystemKey();
+        _IWindowTitleBar = iWindowTitleBar;
         InitializeNotifyIcon();
         if (_appSettings.Fisrtload == 1)
         {
@@ -112,7 +113,7 @@ public partial class WindowMain : Window, IDisposable
             {
                 return;
             }
-            ShowMainWindow();
+            _IWindowTitleBar.Restart();
         };
         _notifyIcon.Visible = true;
     }
@@ -129,6 +130,7 @@ public partial class WindowMain : Window, IDisposable
         if (this.WindowState == WindowState.Minimized)
         {
             this.ShowInTaskbar = false;
+            CloseWebView2Processes();
         }
     }
 
