@@ -141,23 +141,7 @@ public partial class WindowMain : Window, IDisposable
         {
             this.WindowState = WindowState.Minimized;
             e.Cancel = true;
-        }
-    }
-    private void CloseWebView2Processes()
-    {
-        var processes = Process.GetProcessesByName("msedgewebview2");
-        foreach (var process in processes)
-        {
-            try
-            {
 
-                    process.Kill();
-
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Failed to kill process {process.Id}: {ex.Message}");
-            }
         }
     }
 
