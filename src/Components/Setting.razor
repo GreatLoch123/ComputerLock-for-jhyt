@@ -5,13 +5,6 @@
            Width="350px"
            Variant="@DrawerVariant.Temporary">
     <MudDrawerContainer>
-
-        <MudSwitch Value="@(_isAutostart)"
-                   T="bool"
-                   ValueChanged="AutostartChange"
-                   Label="@(Lang["Autostart"])"
-                   Color="Color.Primary" />
-
         <MudSwitch @bind-Value="@(AppSettings.IsHideWindowWhenLaunch)"
                    @bind-Value:after="SaveSettings"
                    Label="@(Lang["HideWindowWhenLaunch"])"

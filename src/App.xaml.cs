@@ -79,13 +79,13 @@ public partial class App : Application
         Thread.CurrentThread.CurrentUICulture = cultureInfo;
         _mainWindow = sp.GetRequiredService<WindowMain>();
         Application.Current.MainWindow = _mainWindow;
-        _mainWindow.Show();
+        //_mainWindow.Show();
     }
     public void CloseMainWindow()
     {
         if (Application.Current.MainWindow != null)
         {
-            Application.Current.MainWindow.Close();
+            Application.Current.MainWindow.Show();
         }
     }
     protected override void OnExit(ExitEventArgs e)

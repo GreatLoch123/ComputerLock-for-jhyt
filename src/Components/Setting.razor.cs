@@ -5,7 +5,6 @@ namespace ComputerLock.Components;
 public partial class Setting
 {
     private bool _isOpen;
-    private bool _isAutostart;
     private string _version = "V1.3 ";
     private readonly string _logPath = Path.Combine(Environment.CurrentDirectory, "log");
     private bool _logLoadingOk = false;
@@ -29,7 +28,6 @@ public partial class Setting
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        _isAutostart = AutostartHook.IsAutostart();
         _version = "V1.3";
     }
 
@@ -106,20 +104,6 @@ public partial class Setting
             await CalcLogSizeAsync();
         }
     }
-
-    private void AutostartChange(bool isChecked)
-    {
-        if (isChecked)
-        {
-            AutostartHook.EnabledAutostart();
-        }
-        else
-        {
-            AutostartHook.DisabledAutostart();
-        }
-        _isAutostart = AutostartHook.IsAutostart();
-    }
-
     private void SaveSettings()
     {
         AppSettingWriter.Save(AppSettings);

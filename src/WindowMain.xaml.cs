@@ -113,7 +113,8 @@ public partial class WindowMain : Window, IDisposable
             {
                 return;
             }
-            _IWindowTitleBar.Restart();
+            var app = System.Windows.Application.Current;
+            ((App)app).CloseMainWindow();
         };
         _notifyIcon.Visible = true;
     }
@@ -130,7 +131,7 @@ public partial class WindowMain : Window, IDisposable
         if (this.WindowState == WindowState.Minimized)
         {
             this.ShowInTaskbar = false;
-            CloseWebView2Processes();
+            _IWindowTitleBar.Restart();
         }
     }
 
@@ -140,7 +141,6 @@ public partial class WindowMain : Window, IDisposable
         {
             this.WindowState = WindowState.Minimized;
             e.Cancel = true;
-            CloseWebView2Processes();
         }
     }
     private void CloseWebView2Processes()
@@ -150,7 +150,9 @@ public partial class WindowMain : Window, IDisposable
         {
             try
             {
-                process.Kill();
+
+                    process.Kill();
+
             }
             catch (Exception ex)
             {

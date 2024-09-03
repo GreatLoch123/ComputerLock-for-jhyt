@@ -56,15 +56,11 @@ dow)"
 
 <MudGrid>
     <MudItem xs="6">
-        <div class="d-flex align-center">
-            <MudSwitch 
-                @bind-Value="@(AppSettings.LockOnStartup)"
-                @bind-Value:after="SaveSettings"
-                Label="@(Lang["LockOnStartup"])"
-                Color="Color.Primary"
-                style="font-size: 16px;" 
-            />
-        </div>
+    <MudSwitch Value="@(_isAutostart)"
+               T="bool"
+               ValueChanged="AutostartChange"
+               Label="@(Lang["Autostart"])"
+               Color="Color.Primary" />
     </MudItem>
     <MudItem xs="6">
         <div class="d-flex align-center">
@@ -74,23 +70,10 @@ dow)"
                 Variant="Variant.Text"
                 Size="Size.Small"
                 Color="Color.Primary"
-                OnClick="SetShortcutKey"
                 style="font-size: 16px;"
             >
                 @(_shortcutKeyText)
             </MudButton>
-            @if (AppSettings.ShortcutKeyForLock.IsNotEmpty())
-            {
-                <MudTooltip Text="删除快捷键" Delay="600">
-                    <MudIconButton 
-                        Icon="@Icons.Material.Filled.Delete"
-                        Size="Size.Small"
-                        Color="Color.Secondary"
-                        OnClick="ClearShortcutKey"
-                        style="font-size: 14px;" 
-                    />
-                </MudTooltip>
-            }
         </div>
     </MudItem>
 </MudGrid>

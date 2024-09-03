@@ -18,11 +18,12 @@ public partial class Index
 
     [Inject]
     private ILocker Locker { get; set; } = default!;
-
+    [Inject]
+    private AutostartHook AutostartHook { get; set; } = default!;
 
     [Inject]
     private IWindowTitleBar WindowTitleBar { get; set; } = default!;
-
+    private bool _isAutostart;
     private bool _keyboardDownChecked;
     private bool _mouseDownChecked;
     private string _shortcutKeyText = "Win+L";
@@ -31,7 +32,7 @@ public partial class Index
         await base.OnInitializedAsync();
         _keyboardDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.KeyboardDown) == PasswordBoxActiveMethodEnum.KeyboardDown;
         _mouseDownChecked = (AppSettings.PasswordBoxActiveMethod & PasswordBoxActiveMethodEnum.MouseDown) == PasswordBoxActiveMethodEnum.MouseDown;
-
+        _isAutostart = AutostartHook.IsAutostart();
     }
     private void KeyboardDownChecked()
     {
@@ -80,7 +81,18 @@ public partial class Index
         SaveSettings();
         RestartTips();
     }
-
+    private void AutostartChange(bool isChecked)
+    {
+        if (isChecked)
+        {
+            AutostartHook.EnabledAutostart();
+        }
+        else
+        {
+            AutostartHook.DisabledAutostart();
+        }
+        _isAutostart = AutostartHook.IsAutostart();
+    }
     private void PwdBoxLocationChanged(ScreenLocationEnum location)
     {
         AppSettings.PasswordInputLocation = location;

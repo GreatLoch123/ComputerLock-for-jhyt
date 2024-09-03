@@ -44,18 +44,18 @@ public partial class WindowLockScreen : Window
     public const int MOUSEEVENTF_LEFTUP = 0x0004;
     public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
     public const int MOUSEEVENTF_RIGHTUP = 0x0010;
-
-    public WindowLockScreen(AppSettings appSettings, IStringLocalizer<Lang> lang)
+    private readonly IWindowTitleBar _IWindowTitleBar;
+    public WindowLockScreen(AppSettings appSettings, IStringLocalizer<Lang> lang, IWindowTitleBar iWindowTitleBar)
     {
         InitializeComponent();
         _appSettings = appSettings;
         _lang = lang;
-
         _timer.Interval = TimeSpan.FromSeconds(1);
         _timer.Tick += Timer_Tick;
         _timer.Start();
         InitializeWallpaperTimer();
         UpdateWallpaper();
+        _IWindowTitleBar = iWindowTitleBar;
     }
 
     public void Window_Loaded(object sender, RoutedEventArgs e)
@@ -236,6 +236,7 @@ public partial class WindowLockScreen : Window
         TxtPassword.PasswordChanged -= TxtPassword_PasswordChanged;
         TxtPassword.KeyDown -= TxtPassword_KeyDown;
         PasswordBlock.MouseDown -= PasswordBlock_MouseDown;
+
     }
 
     private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
