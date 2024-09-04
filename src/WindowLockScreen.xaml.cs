@@ -236,7 +236,7 @@ public partial class WindowLockScreen : Window
         TxtPassword.PasswordChanged -= TxtPassword_PasswordChanged;
         TxtPassword.KeyDown -= TxtPassword_KeyDown;
         PasswordBlock.MouseDown -= PasswordBlock_MouseDown;
-
+        _IWindowTitleBar.Restart();
     }
 
     private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)

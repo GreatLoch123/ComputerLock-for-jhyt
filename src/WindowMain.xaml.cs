@@ -82,9 +82,9 @@ public partial class WindowMain : Window, IDisposable
 
     private void InitializeNotifyIcon()
     {
-
+        var app = System.Windows.Application.Current;
         var btnShowWindow = new ToolStripMenuItem(Lang.ShowMainWindow);
-        btnShowWindow.Click += (_, _) => ShowMainWindow();
+        btnShowWindow.Click += (_, _) => ((App)app).CloseMainWindow();
         _contextMenuStrip.Items.Add(btnShowWindow);
 
         var btnLock = new ToolStripMenuItem(Lang.DoLock);
@@ -113,7 +113,7 @@ public partial class WindowMain : Window, IDisposable
             {
                 return;
             }
-            var app = System.Windows.Application.Current;
+            
             ((App)app).CloseMainWindow();
         };
         _notifyIcon.Visible = true;
