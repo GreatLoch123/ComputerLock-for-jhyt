@@ -65,31 +65,27 @@
                            OnClick="ClearLogAsync">@(Lang["RemoveLogs"])</MudButton>
             }
         </div> *@
-   
-        <div class="mt-1 d-flex align-center">
-            <MudChip Label="true"
-                     Disabled="true"
-                     Size="Size.Small">
-                @(_version)
+
+        <div class="mt-1 d-flex align-center" style="width: 100%;">
+            <MudChip Label="true" Disabled="true" Size="Size.Medium" style="display: flex; width: 100%; justify-content: space-between;">
+                <span class="ml-5">Author：罗楚豪</span>
+                <span class="ml-5">Creative：汪洋</span>
             </MudChip>
-             <MudChip Label="true"
-                     Disabled="true"
-                     Size="Size.Small">
-                Author: 罗楚豪 Creative：汪洋
-            </MudChip>
-           
-          @*   <MudButton Variant="Variant.Text"
-                       Color="Color.Primary"
-                       Size="Size.Small"
-                       OnClick="CheckUpdateAsync">@(Lang["CheckUpdate"])</MudButton> *@
         </div>
+
+
+
+        @*   <MudButton Variant="Variant.Text"
+        Color="Color.Primary"
+        Size="Size.Small"
+        OnClick="CheckUpdateAsync">@(Lang["CheckUpdate"])</MudButton> *@
         <div class="mt-1 d-flex justify-center">
             <MudButton Href="http://hbjhytzyy.com/"
                        Target="_blank"
                        Size="Size.Medium"
                        Color="Color.Primary"
                        Class="custom-button">
-                江汉油田总医院
+                江汉油田总医院 @(_version)
             </MudButton>
         </div>
     </MudDrawerContainer>

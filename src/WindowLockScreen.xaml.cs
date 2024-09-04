@@ -19,7 +19,7 @@ public partial class WindowLockScreen : Window
     private readonly AppSettings _appSettings;
     private readonly IStringLocalizer<Lang> _lang;
     private DispatcherTimer wallpaperTimer;
-    private int currentImageIndex = 2;
+    private int currentImageIndex = 1;
     private int totalImages = 18; // 假设你有18张图片
     public event EventHandler<EventArgs>? OnUnlock;
 
@@ -54,6 +54,9 @@ public partial class WindowLockScreen : Window
         _timer.Tick += Timer_Tick;
         _timer.Start();
         InitializeWallpaperTimer();
+        Random random = new Random();
+        int randomNumber = random.Next(1, 19); // 生成1到18的随机数（包含1，包含18）
+        currentImageIndex = randomNumber;
         UpdateWallpaper();
         _IWindowTitleBar = iWindowTitleBar;
     }
@@ -130,7 +133,7 @@ public partial class WindowLockScreen : Window
         try
         {
             var time = DateTime.Now;
-            if (time.Second % 30 == 0)
+            if (time.Second % 50 == 0)
             {
                 if (_appSettings.IsDisableWindowsLock)
                 {
@@ -267,6 +270,7 @@ public partial class WindowLockScreen : Window
     }
     private void UpdateWallpaper()
     {
+       
         if (this.Background is ImageBrush oldBrush)
         {
             oldBrush.ImageSource = null;
@@ -282,7 +286,7 @@ public partial class WindowLockScreen : Window
         currentImageIndex++;
         if (currentImageIndex > totalImages)
         {
-            currentImageIndex = 2;
+            currentImageIndex = 1;
         }
     }
 
