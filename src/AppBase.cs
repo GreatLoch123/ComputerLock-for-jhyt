@@ -19,7 +19,7 @@ namespace ComputerLock
         /// <summary>
         /// 配置文件路径
         /// </summary>
-        public static string ConfigPath { get; set; } = Path.Combine(DataPath, FriendlyName, "config.json");
+        public static string ConfigPath { get; set; } = Path.Combine(DataPath, FriendlyName, "Softconfig.json");
 
         public static string Version { get; set; } = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString();
     }

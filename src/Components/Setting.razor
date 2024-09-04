@@ -6,7 +6,6 @@
            Variant="@DrawerVariant.Temporary">
     <MudDrawerContainer>
         <MudSwitch @bind-Value="@(AppSettings.IsHideWindowWhenLaunch)"
-                   @bind-Value:after="SaveSettings"
                    Label="@(Lang["HideWindowWhenLaunch"])"
                    Color="Color.Primary" />
         <MudSwitch @bind-Value="@(AppSettings.IsHideWindowWhenClose)"
