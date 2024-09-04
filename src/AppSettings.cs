@@ -13,7 +13,7 @@ public class AppSettings
     /// <summary>
     /// 启动后最小化到托盘
     /// </summary>
-    public bool IsHideWindowWhenLaunch { get; set; } = true;
+    public bool IsHideWindowWhenLaunch { get; set; } = false;
 
     /// <summary>
     /// 自动移动鼠标

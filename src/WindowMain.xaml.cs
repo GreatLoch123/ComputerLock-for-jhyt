@@ -26,6 +26,7 @@ public partial class WindowMain : Window, IDisposable
         _locker = locker;
         _systemKeyHook.DisableSystemKey();
         _IWindowTitleBar = iWindowTitleBar;
+        _autostartHook = autostartHook;
         InitializeNotifyIcon();
         if (_appSettings.Fisrtload == 1)
         {
@@ -82,9 +83,9 @@ public partial class WindowMain : Window, IDisposable
 
     private void InitializeNotifyIcon()
     {
-        var app = System.Windows.Application.Current;
+        
         var btnShowWindow = new ToolStripMenuItem(Lang.ShowMainWindow);
-        btnShowWindow.Click += (_, _) => ((App)app).CloseMainWindow();
+        btnShowWindow.Click += (_, _) => ShowMainWindow();
         _contextMenuStrip.Items.Add(btnShowWindow);
 
         var btnLock = new ToolStripMenuItem(Lang.DoLock);
@@ -113,7 +114,7 @@ public partial class WindowMain : Window, IDisposable
             {
                 return;
             }
-            
+            var app = System.Windows.Application.Current;
             ((App)app).CloseMainWindow();
         };
         _notifyIcon.Visible = true;
