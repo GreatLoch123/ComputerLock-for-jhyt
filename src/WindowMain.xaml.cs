@@ -80,7 +80,7 @@ public partial class WindowMain : Window, IDisposable
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
         this.Title = Lang.Title;
-        this.WindowState = _appSettings.IsHideWindowWhenLaunch ? WindowState.Minimized : WindowState.Normal;
+        this.WindowState = WindowState.Normal;
     }
 
     private void InitializeNotifyIcon()
