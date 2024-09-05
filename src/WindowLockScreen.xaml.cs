@@ -232,6 +232,11 @@ public partial class WindowLockScreen : Window
 
     private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
     {
+        
+    }
+    private void Window_Closed(object sender, EventArgs e)
+    {
+        // 窗口关闭后执行的逻辑
         _timer.Stop();
         _timer.Tick -= Timer_Tick;  // 清除事件处理程序
         wallpaperTimer.Stop();
@@ -241,7 +246,6 @@ public partial class WindowLockScreen : Window
         PasswordBlock.MouseDown -= PasswordBlock_MouseDown;
         _IWindowTitleBar.Restart();
     }
-
     private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
         if (e.Key != Key.Escape)
