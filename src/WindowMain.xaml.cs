@@ -119,8 +119,10 @@ public partial class WindowMain : Window, IDisposable
             {
                 return;
             }
-            
             ((App)app).CloseMainWindow();
+            //Form1 myForm = new Form1();
+            //myForm.ShowDialog();  // 模态显示窗体，阻塞当前线程，直到窗体关闭
+
         };
         _notifyIcon.Visible = true;
     }
