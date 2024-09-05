@@ -120,7 +120,7 @@ public partial class Setting
         else
         {
             System.Windows.MessageBox.Show("成功禁用系统锁屏");
-            AutostartHook.DisabledAutostart();
+            AutostartHook.DisableWindowsLockScreen();
         }
     }
 
