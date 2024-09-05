@@ -11,6 +11,7 @@ public partial class WindowMain : Window, IDisposable
     private readonly AutostartHook _autostartHook;
     private readonly MemoryCleaner _memoryCleaner;
     private readonly AppSettings _appSettings;
+    private readonly AppSettingWriter _appSettingWriter;
     private readonly UserActivityMonitor? _activityMonitor;
     private readonly ILocker _locker;
     private readonly IWindowTitleBar _IWindowTitleBar;
@@ -18,7 +19,7 @@ public partial class WindowMain : Window, IDisposable
     private readonly ContextMenuStrip _contextMenuStrip = new();
 
 
-    public WindowMain(AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor,SystemKeyHook systemKeyHook, IWindowTitleBar iWindowTitleBar)
+    public WindowMain(AutostartHook autostartHook, AppSettings appSettings, ILocker locker, UserActivityMonitor activityMonitor,SystemKeyHook systemKeyHook, IWindowTitleBar iWindowTitleBar, AppSettingWriter appSettingWriter)
     {
         InitializeComponent();
         _systemKeyHook = systemKeyHook;
@@ -27,6 +28,7 @@ public partial class WindowMain : Window, IDisposable
         _systemKeyHook.DisableSystemKey();
         _IWindowTitleBar = iWindowTitleBar;
         _autostartHook = autostartHook;
+        _appSettingWriter = appSettingWriter;
         var app = System.Windows.Application.Current;
         InitializeNotifyIcon();
         if (_appSettings.Fisrtload == 1)
@@ -34,6 +36,7 @@ public partial class WindowMain : Window, IDisposable
             _autostartHook.EnabledAutostart();
             _autostartHook.DisableWindowsLockScreen();
             _appSettings.Fisrtload = 0;
+            _appSettingWriter.Save(_appSettings);
             ((App)app).CloseMainWindow();
         }
        
