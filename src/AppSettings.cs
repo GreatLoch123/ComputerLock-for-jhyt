@@ -9,6 +9,11 @@ public class AppSettings
     /// 关闭窗口时最小化到托
     /// </summary>
     public bool IsHideWindowWhenClose { get; set; } = true;
+    /// <summary>
+    /// 恢复winn+L唤醒系统锁屏或者
+    /// </summary>
+
+    public bool IsEnableSysLock { get; set; } = false;
 
     /// <summary>
     /// 启动后最小化到托盘

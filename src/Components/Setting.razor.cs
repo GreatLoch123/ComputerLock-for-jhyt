@@ -108,6 +108,21 @@ public partial class Setting
     {
         AppSettingWriter.Save(AppSettings);
     }
+    private void IsEnablesyslockCut()
+    {
+       
+        AppSettingWriter.Save(AppSettings);
+        if (AppSettings.IsEnableSysLock) 
+        {
+            System.Windows.MessageBox.Show("成功恢复系统锁屏");
+            AutostartHook.enableWindowsLockScreen();
+        }
+        else
+        {
+            System.Windows.MessageBox.Show("成功禁用系统锁屏");
+            AutostartHook.DisabledAutostart();
+        }
+    }
 
 
     private Task LangValueChanged(string lang)

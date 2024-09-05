@@ -5,8 +5,9 @@
            Width="350px"
            Variant="@DrawerVariant.Temporary">
     <MudDrawerContainer>
-        <MudSwitch @bind-Value="@(AppSettings.IsHideWindowWhenLaunch)"
-                   Label="@(Lang["HideWindowWhenLaunch"])"
+        <MudSwitch @bind-Value="@(AppSettings.IsEnableSysLock)"
+                   @bind-Value:after="IsEnablesyslockCut"
+                   Label="恢复系统锁屏"
                    Color="Color.Primary" />
         <MudSwitch @bind-Value="@(AppSettings.IsHideWindowWhenClose)"
                    @bind-Value:after="SaveSettings"
