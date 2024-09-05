@@ -23,7 +23,7 @@
         <td>✔️</td>
     </tr>
     <tr>
-        <td>一键锁屏</br>Shortcut key screen lock</td>
+        <td>接管系统锁屏快捷键Win+L 实现一键锁屏</br>Shortcut key screen lock</td>
         <td>✔️</td>
     </tr>
     <tr>
