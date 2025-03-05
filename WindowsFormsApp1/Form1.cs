@@ -6,26 +6,39 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
         public NotifyIcon yyIcon;
         private static LockScreenConfig config = ConfigManager.LoadConfig();
+        private static regedit_edit Regedit_Edit=new regedit_edit();
         public bool isinitializing = false;
         public bool isinitializing2 = false;
-
         public bool IsAutoStart = true;
         public bool IsRestore = true;
         public Form1()
         {
             InitializeComponent();
             this.pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
-            this.pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            if (config.AutoStart)
+            {
+                this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
+            }
+            else
+            {
+                this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
+            }
+                this.pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
-            
+            if (config.UseSystemLock)
+            {
+                this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
+            }
+            else
+            {
+                this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
+            }
             Locktime();
             
         }
@@ -90,27 +103,32 @@ namespace WindowsFormsApp1
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             //自动启动
-            if (IsAutoStart) 
+            if (config.AutoStart) 
             {
                 this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
-                IsAutoStart = false;
-                restart_confirm();
-
+                Regedit_Edit.chkAutoStart_CheckedChanged(false);
+                config.AutoStart = false;
+                ConfigManager.SaveConfig(config);
+                //restart_confirm();
             }
             else
             {
                 this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
+                Regedit_Edit.chkAutoStart_CheckedChanged(true);
+                config.AutoStart = true;
+                ConfigManager.SaveConfig(config);
                 IsAutoStart = true;
-               restart_confirm();
+               //restart_confirm();
 
             }
         }
         private void pictureBox2_Click(object sender, EventArgs e)
         {
             //恢复系统锁屏
-            if (IsRestore)
+            if (config.UseSystemLock)
             {
                 this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
+                Regedit_Edit.chkBlockWinL_CheckedChanged();
                 IsRestore = false;
                 restart_confirm();
 
