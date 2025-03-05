@@ -88,9 +88,9 @@ namespace WindowsFormsApp1
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 9F);
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(253, 79);
+            this.label1.Location = new System.Drawing.Point(254, 29);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(101, 12);
+            this.label1.Size = new System.Drawing.Size(127, 15);
             this.label1.TabIndex = 7;
             this.label1.Text = "自动锁屏时间设置";
             // 
@@ -110,7 +110,7 @@ namespace WindowsFormsApp1
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label2.Location = new System.Drawing.Point(78, 31);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 14);
+            this.label2.Size = new System.Drawing.Size(76, 17);
             this.label2.TabIndex = 9;
             this.label2.Text = "开机自启";
             // 
@@ -120,7 +120,7 @@ namespace WindowsFormsApp1
             this.label3.Font = new System.Drawing.Font("宋体", 10F);
             this.label3.Location = new System.Drawing.Point(79, 96);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(91, 14);
+            this.label3.Size = new System.Drawing.Size(110, 17);
             this.label3.TabIndex = 11;
             this.label3.Text = "恢复系统锁屏";
             // 
@@ -139,7 +139,7 @@ namespace WindowsFormsApp1
             this.label4.Font = new System.Drawing.Font("宋体", 10F);
             this.label4.Location = new System.Drawing.Point(295, 31);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 14);
+            this.label4.Size = new System.Drawing.Size(0, 17);
             this.label4.TabIndex = 13;
             // 
             // label5
@@ -147,9 +147,9 @@ namespace WindowsFormsApp1
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 9F);
             this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(253, 20);
+            this.label5.Location = new System.Drawing.Point(255, 79);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(101, 12);
+            this.label5.Size = new System.Drawing.Size(127, 15);
             this.label5.TabIndex = 15;
             this.label5.Text = "锁屏壁纸切换时间";
             // 
@@ -159,14 +159,14 @@ namespace WindowsFormsApp1
             this.metroComboBox2.FontSize = MetroFramework.MetroComboBoxSize.Small;
             this.metroComboBox2.FontWeight = MetroFramework.MetroComboBoxWeight.Bold;
             this.metroComboBox2.FormattingEnabled = true;
-            this.metroComboBox2.ItemHeight = 19;
+            this.metroComboBox2.ItemHeight = 21;
             this.metroComboBox2.Items.AddRange(new object[] {
             "5分钟",
             "10分钟",
             "30分钟"});
-            this.metroComboBox2.Location = new System.Drawing.Point(251, 37);
+            this.metroComboBox2.Location = new System.Drawing.Point(257, 99);
             this.metroComboBox2.Name = "metroComboBox2";
-            this.metroComboBox2.Size = new System.Drawing.Size(99, 25);
+            this.metroComboBox2.Size = new System.Drawing.Size(99, 27);
             this.metroComboBox2.Style = MetroFramework.MetroColorStyle.Black;
             this.metroComboBox2.TabIndex = 14;
             this.metroComboBox2.UseSelectable = true;
@@ -179,14 +179,14 @@ namespace WindowsFormsApp1
             this.metroComboBox1.FontSize = MetroFramework.MetroComboBoxSize.Small;
             this.metroComboBox1.FontWeight = MetroFramework.MetroComboBoxWeight.Bold;
             this.metroComboBox1.FormattingEnabled = true;
-            this.metroComboBox1.ItemHeight = 19;
+            this.metroComboBox1.ItemHeight = 21;
             this.metroComboBox1.Items.AddRange(new object[] {
             "5分钟",
             "10分钟",
             "30分钟"});
-            this.metroComboBox1.Location = new System.Drawing.Point(251, 96);
+            this.metroComboBox1.Location = new System.Drawing.Point(258, 48);
             this.metroComboBox1.Name = "metroComboBox1";
-            this.metroComboBox1.Size = new System.Drawing.Size(99, 25);
+            this.metroComboBox1.Size = new System.Drawing.Size(99, 27);
             this.metroComboBox1.TabIndex = 17;
             this.metroComboBox1.UseSelectable = true;
             this.metroComboBox1.SelectedIndexChanged += new System.EventHandler(this.metroComboBox1_SelectedIndexChanged_1);

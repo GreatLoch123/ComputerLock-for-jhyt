@@ -11,6 +11,7 @@ namespace WindowsFormsApp1
 {
     public partial class Form3 : Form
     {
+        //调用ConfigManagere的LoadConfig方法丢失config里的数据
         private static LockScreenConfig config = ConfigManager.LoadConfig();
         public Form3()
         {
@@ -48,12 +49,15 @@ namespace WindowsFormsApp1
             {
                 if (metroTextBox2.Text != null && metroTextBox2.Text == metroTextBox3.Text)
                 {
-                    
+                    config.Password = metroTextBox2.Text;
+                    ConfigManager.SaveConfig(config); //调用ConfigManger的SaveConfig方法来保存新设置的文件
+                    MessageBox.Show("密码已经修改成功，请牢记新密码，如果出现无法打开的情况请联系信息科");
+                    this.Close();
                 }
-                else { MessageBox.Show("请确认新密码与确认密码一致"); }
+                else { MessageBox.Show("请确认两次输入的新密码一致"); }
             }
             
-            else { MessageBox.Show("密码错误"); }
+            else { MessageBox.Show("旧密码错误，请重新输入"); }
         }
         private void metroTextBox3_Click(object sender, EventArgs e)
         {

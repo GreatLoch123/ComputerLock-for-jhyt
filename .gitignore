@@ -2,7 +2,7 @@
 bin/
 obj/
 pubuish/
-
+.vs/
 # 依赖目录
 node_modules/
 vendor/
