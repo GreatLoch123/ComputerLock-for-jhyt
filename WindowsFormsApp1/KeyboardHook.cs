@@ -7,10 +7,6 @@ using System.Reflection;
 
 namespace KeyHook
 {
-    /// <summary>
-    /// 键盘钩子
-    /// [以下代码来自某网友，并非本人原创]
-    /// </summary>
     class KeyboardHook
     {
         public event KeyEventHandler KeyDownEvent;

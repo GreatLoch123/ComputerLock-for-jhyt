@@ -1,28 +1,97 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace WindowsFormsApp1
 {
     public partial class Form2 : Form
     {
+        // 原有成员变量保持不变...
+
+        // 新增键盘钩子相关成员
+        private IntPtr _keyboardHookHandle = IntPtr.Zero;
+        private const int WH_KEYBOARD_LL = 13;
+        private delegate IntPtr LowLevelKeyboardProc(int nCode, IntPtr wParam, IntPtr lParam);
+        private static LowLevelKeyboardProc _keyboardProc;
+        private const int WM_KEYDOWN = 0x0100;
+        private const int WM_SYSKEYDOWN = 0x0104;
         private static int currentImageIndex = 2;
         private static LockScreenConfig config = ConfigManager.LoadConfig();
         private Timer timer;
         private Image nextImage;
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelKeyboardProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        [DllImport("user32.dll")]
+        private static extern short GetAsyncKeyState(Keys vKey);
+
         public Form2()
         {
             InitializeComponent();
-            DoubleBuffered = true; // 启用双缓冲以减少闪烁
+            DoubleBuffered = true;
             change_bz();
+            InstallKeyboardHook(); // 新增钩子安装
         }
+
+        // 安装键盘钩子
+        private void InstallKeyboardHook()
+        {
+            _keyboardProc = KeyboardHookCallback;
+            using (var currentProcess = System.Diagnostics.Process.GetCurrentProcess())
+            using (var currentModule = currentProcess.MainModule)
+            {
+                _keyboardHookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, _keyboardProc,
+                    GetModuleHandle(currentModule.ModuleName), 0);
+            }
+        }
+
+        // 键盘钩子回调函数
+        private IntPtr KeyboardHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            if (nCode >= 0)
+            {
+                int vkCode = Marshal.ReadInt32(lParam);
+
+                // 拦截Alt+F4
+                if (vkCode == (int)Keys.F4 && (IsAltKeyPressed()))
+                {
+                    return (IntPtr)1; // 阻止系统处理
+                }
+                // 拦截Alt+tab
+                if (vkCode == (int)Keys.Tab && (IsAltKeyPressed()))
+                {
+                    return (IntPtr)1; // 阻止系统处理
+                }
+
+                // 拦截Win键（左右Win键分开检测）
+                if (vkCode == (int)Keys.LWin || vkCode == (int)Keys.RWin)
+                {
+                    return (IntPtr)1;
+                }
+            }
+            return CallNextHookEx(_keyboardHookHandle, nCode, wParam, lParam);
+        }
+
+        // 检测Alt键状态
+        private bool IsAltKeyPressed()
+        {
+            return (GetAsyncKeyState(Keys.Menu) & 0x8000) != 0;
+        }
+
+        // 修改原有FormClosed事件处理
 
         public void change_bz()
         {
@@ -124,8 +193,15 @@ namespace WindowsFormsApp1
                 nextImage.Dispose();
                 nextImage = null;
             }
-
+            if (_keyboardHookHandle != IntPtr.Zero)
+            {
+                UnhookWindowsHookEx(_keyboardHookHandle);
+                _keyboardHookHandle = IntPtr.Zero;
+            }
             Console.WriteLine("所有资源已释放");
         }
     }
+
+
+    // 其他原有方法保持不变...
 }
