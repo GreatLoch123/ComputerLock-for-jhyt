@@ -7,16 +7,24 @@
       "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\passwordbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\passwordbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\passwordbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\passwordbox.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\useractivitymonitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\useractivitymonitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\passwordconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\passwordconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\keyboardhook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\form1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\passwordconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\passwordconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\form2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -55,10 +59,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\properties\\resources.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\properties\\resources.resx||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\windowsformsapp1\\useractivitymonitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1AE2CAA-8A16-41AD-B98C-50101F73D8F7}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\useractivitymonitor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\GreatLoch\\AppData\\Local\\Temp\\.vsdbgsrc\\d3c85b83e964f4750cc2ec44122b187022ec5277ec7b9f14c22000b0df625f32\\Control.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -84,51 +84,55 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs",
+              "RelativeDocumentMoniker": "WindowsFormsApp1\\Form1.cs",
+              "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs",
+              "RelativeToolTip": "WindowsFormsApp1\\Form1.cs",
+              "ViewState": "AQIAAFkAAAAAMzMzMzM3wDcAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-21T20:08:14.052Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "PasswordConfig.cs",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\PasswordConfig.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\PasswordConfig.cs",
               "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\PasswordConfig.cs",
               "RelativeToolTip": "WindowsFormsApp1\\PasswordConfig.cs",
-              "ViewState": "AQIAAC4AAADkZWZmZmYmwE4AAAABAAAA",
+              "ViewState": "AQIAACoAAAAAY2ZmZmYmwEQAAAAnAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T14:22:29.255Z"
+              "WhenOpened": "2024-12-29T14:22:29.255Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Program.cs",
               "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
               "RelativeToolTip": "WindowsFormsApp1\\Program.cs",
-              "ViewState": "AQIAAAkAAAAA1MzMzMwMwA8AAABMAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAASAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-21T19:38:40.911Z"
+              "WhenOpened": "2024-12-21T19:38:40.911Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "KeyboardHook.cs",
-              "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\KeyboardHook.cs",
-              "RelativeDocumentMoniker": "WindowsFormsApp1\\KeyboardHook.cs",
-              "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\KeyboardHook.cs",
-              "RelativeToolTip": "WindowsFormsApp1\\KeyboardHook.cs",
-              "ViewState": "AQIAAIsAAAAAqMzMzMwEwAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T08:16:57.016Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "packages.config",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\packages.config",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\packages.config",
@@ -140,27 +144,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Passwordbox.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Passwordbox.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Passwordbox.cs",
-              "ToolTip": "C:\\Users\\GreatLoch\\Desktop\\WindowsFormsApp1\\WindowsFormsApp1\\Passwordbox.cs [\u8BBE\u8BA1]",
-              "RelativeToolTip": "..\\..\\..\\Users\\GreatLoch\\Desktop\\WindowsFormsApp1\\WindowsFormsApp1\\Passwordbox.cs [\u8BBE\u8BA1]",
+              "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Passwordbox.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "WindowsFormsApp1\\Passwordbox.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-21T19:47:53.734Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form1.cs",
-              "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs",
-              "RelativeDocumentMoniker": "WindowsFormsApp1\\Form1.cs",
-              "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs",
-              "RelativeToolTip": "WindowsFormsApp1\\Form1.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAYwHwAAAAhAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-21T20:08:14.052Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-21T19:47:53.734Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
             },
             {
               "$type": "Document",
@@ -168,14 +160,15 @@
               "Title": "Form1.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Form1.cs",
-              "ToolTip": "C:\\Users\\GreatLoch\\Desktop\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs [\u8BBE\u8BA1]",
-              "RelativeToolTip": "..\\..\\..\\Users\\GreatLoch\\Desktop\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs [\u8BBE\u8BA1]",
+              "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs [\u8BBE\u8BA1]",
+              "RelativeToolTip": "WindowsFormsApp1\\Form1.cs [\u8BBE\u8BA1]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-21T12:26:49.825Z"
+              "WhenOpened": "2024-12-21T12:26:49.825Z",
+              "EditorCaption": " [\u8BBE\u8BA1]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Form1.Designer.cs",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.Designer.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Form1.Designer.cs",
@@ -183,11 +176,12 @@
               "RelativeToolTip": "WindowsFormsApp1\\Form1.Designer.cs",
               "ViewState": "AQIAAEsAAAAAAAAAAAAuwF0AAAAqAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-01-02T07:27:48.669Z"
+              "WhenOpened": "2025-01-02T07:27:48.669Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "Form2.cs [\u8BBE\u8BA1]",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form2.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Form2.cs",
@@ -198,7 +192,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "Form2.cs",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form2.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Form2.cs",
@@ -210,19 +204,32 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 3,
               "Title": "UserActivityMonitor.cs",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\UserActivityMonitor.cs",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\UserActivityMonitor.cs",
               "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\UserActivityMonitor.cs",
               "RelativeToolTip": "WindowsFormsApp1\\UserActivityMonitor.cs",
-              "ViewState": "AQIAAE8AAAAAaGZmZmb2v1sAAAAeAAAA",
+              "ViewState": "AQIAAAgAAACALzMzMzMtwBYAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-29T08:19:00.386Z"
+              "WhenOpened": "2024-12-29T08:19:00.386Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 6,
+              "Title": "KeyboardHook.cs",
+              "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\KeyboardHook.cs",
+              "RelativeDocumentMoniker": "WindowsFormsApp1\\KeyboardHook.cs",
+              "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\KeyboardHook.cs",
+              "RelativeToolTip": "WindowsFormsApp1\\KeyboardHook.cs",
+              "ViewState": "AQIAAIsAAAAAqMzMzMwEwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-29T08:16:57.016Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "ComboBox.cs",
               "DocumentMoniker": "C:\\Users\\GreatLoch\\AppData\\Local\\Temp\\.vsdbgsrc\\0774ee8d4431e5fee842652a896263433b8e651b9048b16a086a123a5fb4c012\\ComboBox.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\GreatLoch\\AppData\\Local\\Temp\\.vsdbgsrc\\0774ee8d4431e5fee842652a896263433b8e651b9048b16a086a123a5fb4c012\\ComboBox.cs",
@@ -259,7 +266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Resources.resx",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Properties\\Resources.resx",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Properties\\Resources.resx",
@@ -267,7 +274,8 @@
               "RelativeToolTip": "WindowsFormsApp1\\Properties\\Resources.resx",
               "ViewState": "AQIAAAAAAACg//////8lwLEAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2024-12-29T15:58:48.234Z"
+              "WhenOpened": "2024-12-29T15:58:48.234Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -283,7 +291,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\GreatLoch\\AppData\\Local\\Temp\\.vsdbgsrc\\a3769162e85c35fe9f9ee2ff0e5b3c261847892df67ff4ae2dabd04fe6a4379c\\Form1.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\Users\\GreatLoch\\AppData\\Local\\Temp\\.vsdbgsrc\\a3769162e85c35fe9f9ee2ff0e5b3c261847892df67ff4ae2dabd04fe6a4379c\\Form1.cs",
@@ -295,14 +303,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Form1.resx",
               "DocumentMoniker": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.resx",
               "RelativeDocumentMoniker": "WindowsFormsApp1\\Form1.resx",
               "ToolTip": "C:\\Project\\\u9501\u5C4F\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.resx",
               "RelativeToolTip": "WindowsFormsApp1\\Form1.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-01-02T02:37:26.982Z"
+              "WhenOpened": "2025-01-02T02:37:26.982Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -326,7 +335,8 @@
               "RelativeToolTip": "WindowsFormsApp1\\Passwordbox.cs",
               "ViewState": "AQIAAAwAAAAA8v/////vvxMAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-21T19:49:39.13Z"
+              "WhenOpened": "2024-12-21T19:49:39.13Z",
+              "EditorCaption": ""
             }
           ]
         }
