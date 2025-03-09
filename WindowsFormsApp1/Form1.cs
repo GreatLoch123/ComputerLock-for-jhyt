@@ -127,26 +127,20 @@ namespace WindowsFormsApp1
             //恢复系统锁屏
             if (config.UseSystemLock)
             {
-                if (restart_confirm())
-                {
                     this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
                     Regedit_Edit.chkBlockWinL_CheckedChanged(false);
                     config.UseSystemLock = false;
                     ConfigManager.SaveConfig(config);
                     //Application.Restart();
-                }
 
             }
             else
             {
-                if (restart_confirm())
-                {
                     this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
                     Regedit_Edit.chkBlockWinL_CheckedChanged(true);
                     config.UseSystemLock = true;
                     ConfigManager.SaveConfig(config);
                     //Application.Restart();
-                }
 
             }
         }

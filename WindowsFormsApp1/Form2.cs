@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Drawing;
-
+using KeyHook;
 namespace WindowsFormsApp1
 {
     public partial class Form2 : Form
@@ -37,19 +37,20 @@ namespace WindowsFormsApp1
 
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(Keys vKey);
-
+        private TextBox _passwordBox;
         public Form2()
         {
             InitializeComponent();
             DoubleBuffered = true;
             change_bz();
-            InstallKeyboardHook(); // 新增钩子安装
+            //InstallKeyboardHook(); // 新增钩子安装
         }
 
         // 安装键盘钩子
         private void InstallKeyboardHook()
         {
             _keyboardProc = KeyboardHookCallback;
+
             using (var currentProcess = System.Diagnostics.Process.GetCurrentProcess())
             using (var currentModule = currentProcess.MainModule)
             {
@@ -162,14 +163,50 @@ namespace WindowsFormsApp1
 
         public void Showpasswordbox()
         {
-            using (Passwordbox passwordForm = new Passwordbox())
+            this.TopMost = true;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.WindowState = FormWindowState.Maximized;
+            this.BackColor = Color.Black;
+
+            // 密码输入框
+            _passwordBox = new TextBox
             {
-                passwordForm.TopMost = true;
-                if (passwordForm.ShowDialog() == DialogResult.OK)
-                {
-                    this.Close();
-                }
-            }
+                PasswordChar = '*',
+                Width = 300,
+                Height = 40,
+                Font = new Font("Arial", 16),
+                Location = new Point(
+                    (this.Width - 300) / 2,
+                    (this.Height - 40) / 2
+                )
+            };
+
+            // 关键：强制获取焦点并选择文本
+            this.Shown += (s, e) =>
+            {
+                _passwordBox.Focus();
+                _passwordBox.SelectAll();
+            };
+            //using (Passwordbox passwordForm = new Passwordbox())
+            //{
+            //    passwordForm.TopMost = true;
+            //    if (passwordForm.ShowDialog() == DialogResult.OK)
+            //    {
+            //        this.Close();
+            //    }
+            //}
+            
+            this.KeyPreview = true;
+            this.Controls.Add(_passwordBox);
+            _passwordBox.TextChanged += (s, e) =>
+            {
+                 
+                    if (_passwordBox != null && config.Password == _passwordBox.Text)
+                    {
+                        this.Close();
+                    }
+                
+            };
         }
 
         private void Form2_FormClosed(object sender, FormClosedEventArgs e)
@@ -201,7 +238,4 @@ namespace WindowsFormsApp1
             Console.WriteLine("所有资源已释放");
         }
     }
-
-
-    // 其他原有方法保持不变...
 }
