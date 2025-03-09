@@ -80,6 +80,7 @@ namespace WindowsFormsApp1
                         KjjHook.UninstallHook();
                         lockScreenForm = new Form2();
                         lockScreenForm.Show();
+                        KjjHook.InstallHook();
                     });
                     trayMenu.MenuItems.Add("退出", (sender, e) =>
                     {
@@ -245,7 +246,9 @@ namespace WindowsFormsApp1
             // 注册空闲事件
             Monitor.OnIdle += (sender, e) =>
             {
+                KjjHook.UninstallHook();
                 ShowLockScreen();
+                KjjHook.InstallHook();
                 Monitor.Dispose();
             };
             Monitor.StartMonitoring();

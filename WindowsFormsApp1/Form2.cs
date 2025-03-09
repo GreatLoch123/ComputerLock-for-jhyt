@@ -72,16 +72,16 @@ namespace WindowsFormsApp1
                     return (IntPtr)1; // 阻止系统处理
                 }
                 // 拦截Alt+tab
-                if (vkCode == (int)Keys.Tab && (IsAltKeyPressed()))
-                {
-                    return (IntPtr)1; // 阻止系统处理
-                }
+                //if (vkCode == (int)Keys.Tab && (IsAltKeyPressed()))
+                //{
+                //    return (IntPtr)1; // 阻止系统处理
+                //}
 
-                // 拦截Win键（左右Win键分开检测）
-                if (vkCode == (int)Keys.LWin || vkCode == (int)Keys.RWin)
-                {
-                    return (IntPtr)1;
-                }
+                //// 拦截Win键（左右Win键分开检测）
+                //if (vkCode == (int)Keys.LWin || vkCode == (int)Keys.RWin)
+                //{
+                //    return (IntPtr)1;
+                //}
             }
             return CallNextHookEx(_keyboardHookHandle, nCode, wParam, lParam);
         }
