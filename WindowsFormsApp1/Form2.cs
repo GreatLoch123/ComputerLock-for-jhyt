@@ -95,7 +95,7 @@ namespace WindowsFormsApp1
 
         public void change_bz()
         {
-            string imagePath = @"resources/3.png";
+            string imagePath = @"resources/1.png";
             timer = new Timer();
             timer.Interval = config.WallpaperChangeIntervalInSeconds * 1000;
             timer.Tick += (s, e) =>

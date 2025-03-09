@@ -13,6 +13,7 @@ namespace KeyHook
         public event KeyPressEventHandler KeyPressEvent;
         public event KeyEventHandler KeyUpEvent;
 
+
         public delegate int HookProc(int nCode, Int32 wParam, IntPtr lParam);
         static int hKeyboardHook = 0; //声明键盘钩子处理的初始值
         //值在Microsoft SDK的Winuser.h里查询

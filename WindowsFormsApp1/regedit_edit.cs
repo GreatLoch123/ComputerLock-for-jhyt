@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Reflection;
 using System.Security;
 using System.Windows.Forms;
@@ -11,6 +12,7 @@ namespace WindowsFormsApp1
         // 新增注册表路径定义
         private const string RUN_REGISTRY_KEY = @"Software\Microsoft\Windows\CurrentVersion\Run";
         private const string POLICIES_REGISTRY_KEY = @"Software\Microsoft\Windows\CurrentVersion\Policies\System";
+        string batFilePath = "DisableSysLock.bat";
         private  string APP_NAME = Assembly.GetEntryAssembly().GetName().Name;
         private static int currentImageIndex = 2;
         private static LockScreenConfig config = ConfigManager.LoadConfig();
@@ -43,22 +45,27 @@ namespace WindowsFormsApp1
         }
 
         // Win+L屏蔽控制
-        public void chkBlockWinL_CheckedChanged()
+        public void chkBlockWinL_CheckedChanged(bool Isswitch)
         {
             try
             {
-                using (RegistryKey policyKey = Registry.CurrentUser.CreateSubKey(POLICIES_REGISTRY_KEY))
-                {
-                    if (config.UseSystemLock)
-                    {
-                        policyKey.SetValue("DisableLockWorkstation", 1, RegistryValueKind.DWord);
-                    }
-                    else
-                    {
-                        policyKey.DeleteValue("DisableLockWorkstation", false);
-                    }
+                    ProcessStartInfo processInfo = new ProcessStartInfo();
 
-                }
+                    // 设置批处理文件路径
+                    processInfo.FileName = batFilePath;
+                    processInfo.UseShellExecute = true; // 使用 Shell 执行
+
+                    // 启动进程
+                    Process process = new Process();
+                    process.StartInfo = processInfo;
+                    process.Start();
+
+                    // 等待进程结束（可选）
+                    process.WaitForExit();
+
+                    // 获取退出代码（可选）
+                    int exitCode = process.ExitCode;
+                    Console.WriteLine("批处理文件执行完成，退出代码: " + exitCode);
             }
             catch (Exception ex)
             {

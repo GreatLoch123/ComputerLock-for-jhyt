@@ -34,6 +34,7 @@ namespace WindowsFormsApp1
             if (config.UseSystemLock)
             {
                 this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
+                
             }
             else
             {
@@ -55,7 +56,7 @@ namespace WindowsFormsApp1
         {
            
         }
-        private void restart_confirm()
+        private bool restart_confirm()
         {
             DialogResult result = MessageBox.Show(
                       "重启后修改生效，确认吗？",   // 提示信息
@@ -68,9 +69,10 @@ namespace WindowsFormsApp1
             if (result == DialogResult.OK)
             {
                 // 点击确定后执行的代码
-                Application.Restart();  // 示例：调用删除文件的方法
+                return true; // 示例：调用删除文件的方法
                                         // 或 RestartApplication();
             }
+            return false;
         }
         private void Locktime() 
         {
@@ -105,21 +107,24 @@ namespace WindowsFormsApp1
             //自动启动
             if (config.AutoStart) 
             {
-                this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
-                Regedit_Edit.chkAutoStart_CheckedChanged(false);
-                config.AutoStart = false;
-                ConfigManager.SaveConfig(config);
-                //restart_confirm();
+                if (restart_confirm())
+                {
+                    this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
+                    Regedit_Edit.chkAutoStart_CheckedChanged(false);
+                    config.AutoStart = false;
+                    ConfigManager.SaveConfig(config);
+                    Application.Restart();
+                }
             }
             else
             {
-                this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
-                Regedit_Edit.chkAutoStart_CheckedChanged(true);
-                config.AutoStart = true;
-                ConfigManager.SaveConfig(config);
-                IsAutoStart = true;
-               //restart_confirm();
-
+                if (restart_confirm()) {
+                    this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
+                    Regedit_Edit.chkAutoStart_CheckedChanged(true);
+                    config.AutoStart = true;
+                    ConfigManager.SaveConfig(config);
+                    Application.Restart();
+                }
             }
         }
         private void pictureBox2_Click(object sender, EventArgs e)
@@ -127,17 +132,27 @@ namespace WindowsFormsApp1
             //恢复系统锁屏
             if (config.UseSystemLock)
             {
-                this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
-                Regedit_Edit.chkBlockWinL_CheckedChanged();
-                IsRestore = false;
-                restart_confirm();
+                if (restart_confirm())
+                {
+                    this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
+                    Regedit_Edit.chkBlockWinL_CheckedChanged(false);
+                    config.UseSystemLock = false;
+                    ConfigManager.SaveConfig(config);
+                    //Application.Restart();
+                }
 
             }
             else
             {
-                this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
-                IsRestore = true;
-                restart_confirm();
+                if (restart_confirm())
+                {
+                    this.pictureBox2.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
+                    Regedit_Edit.chkBlockWinL_CheckedChanged(true);
+                    config.UseSystemLock = true;
+                    ConfigManager.SaveConfig(config);
+                    //Application.Restart();
+                }
+
             }
         }
         private void Form1_Load(object sender, EventArgs e)
