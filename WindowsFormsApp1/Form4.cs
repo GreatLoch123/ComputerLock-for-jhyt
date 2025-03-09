@@ -31,7 +31,7 @@ namespace WindowsFormsApp1
                 config.Password = metroTextBox3.Text;
                 ConfigManager.SaveConfig(config);
                 MessageBox.Show("密码已经修改成功,请嘱咐牢记新密码");
-                this.Close();
+                Application.Restart();
             }
             else
             {

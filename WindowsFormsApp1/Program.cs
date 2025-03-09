@@ -61,8 +61,7 @@ namespace WindowsFormsApp1
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 StartMonitor();
-                SettingForm = new Form1();
-                SettingForm.Show();
+                ShowSingleInstanceForm<Form1>();
                 //ConfigManager.SaveConfig(new LockScreenConfig
                 //{
                 //    LockTimeInSeconds = 600,
@@ -152,21 +151,21 @@ namespace WindowsFormsApp1
         {
             return (GetAsyncKeyState(VK_LWIN) & 0x8000) != 0 || (GetAsyncKeyState(VK_RWIN) & 0x8000) != 0;
         }
-        private static void ShowSingleInstanceForm<T>() where T : Form, new()
+        private static void ShowSingleInstanceForm<T>() where T : Form1, new()
         {
             // 检查当前是否已有指定类型的窗体打开
-            Form existingForm = Application.OpenForms.Cast<Form>().FirstOrDefault(f => f is T);
-            if (existingForm != null)
+            SettingForm = Application.OpenForms.Cast<Form1>().FirstOrDefault(f => f is T);
+            if (SettingForm != null)
             {
                 // 如果已打开，则激活窗口
-                existingForm.WindowState = FormWindowState.Normal; // 恢复窗口
-                existingForm.Activate(); // 激活窗口
+                SettingForm.WindowState = FormWindowState.Normal; // 恢复窗口
+                SettingForm.Activate(); // 激活窗口
             }
             else
             {
                 // 如果未打开，则创建新实例并显示
-                T form = new T();
-                form.Show();
+                SettingForm = new T();
+                SettingForm.Show();
             }
         }
         //测试
@@ -194,6 +193,7 @@ namespace WindowsFormsApp1
                 if (lockScreenForm == null || lockScreenForm.IsDisposed)
                 {
                     KjjHook.UninstallHook();
+                    SettingForm.Close();
                     lockScreenForm = new Form2();
                     lockScreenForm.FormClosing += (s, e) =>
                     {

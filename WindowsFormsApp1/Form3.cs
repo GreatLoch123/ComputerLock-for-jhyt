@@ -51,8 +51,8 @@ namespace WindowsFormsApp1
                 {
                     config.Password = metroTextBox2.Text;
                     ConfigManager.SaveConfig(config); //调用ConfigManger的SaveConfig方法来保存新设置的文件
-                    MessageBox.Show("密码已经修改成功，请牢记新密码，如果出现无法打开的情况请联系信息科");
-                    this.Close();
+                    DialogResult result =MessageBox.Show("密码已经修改成功，请牢记新密码，如果出现无法打开的情况请联系信息科");
+                    Application.Restart();
                 }
                 else { MessageBox.Show("请确认两次输入的新密码一致"); }
             }
