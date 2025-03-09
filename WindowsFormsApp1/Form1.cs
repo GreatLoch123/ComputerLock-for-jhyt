@@ -68,9 +68,10 @@ namespace WindowsFormsApp1
             // 判断用户点击的是否为"确定"
             if (result == DialogResult.OK)
             {
+                Application.Restart();
                 // 点击确定后执行的代码
-                return true; // 示例：调用删除文件的方法
-                                        // 或 RestartApplication();
+                return true;
+                // 示例：调用删除文件的方法
             }
             return false;
         }
@@ -107,24 +108,18 @@ namespace WindowsFormsApp1
             //自动启动
             if (config.AutoStart) 
             {
-                if (restart_confirm())
-                {
                     this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/关.png");
                     Regedit_Edit.chkAutoStart_CheckedChanged(false);
                     config.AutoStart = false;
                     ConfigManager.SaveConfig(config);
-                    Application.Restart();
-                }
+                    //Application.Restart();
             }
             else
             {
-                if (restart_confirm()) {
                     this.pictureBox1.Image = System.Drawing.Image.FromFile(@"Resources/开.png");
                     Regedit_Edit.chkAutoStart_CheckedChanged(true);
                     config.AutoStart = true;
                     ConfigManager.SaveConfig(config);
-                    Application.Restart();
-                }
             }
         }
         private void pictureBox2_Click(object sender, EventArgs e)

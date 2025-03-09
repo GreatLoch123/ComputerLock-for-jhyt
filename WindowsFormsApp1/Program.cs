@@ -14,6 +14,8 @@ namespace WindowsFormsApp1
     internal static class Program
     {
         private static Form2 lockScreenForm = null; // 锁屏窗体
+        private static Form1 SettingForm = null; // 设置窗体
+
         private static LockScreenConfig config = ConfigManager.LoadConfig();
 
         [STAThread]
@@ -32,7 +34,8 @@ namespace WindowsFormsApp1
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 StartMonitor();
-
+                SettingForm = new Form1();
+                SettingForm.Show();
                 //ConfigManager.SaveConfig(new LockScreenConfig
                 //{
                 //    LockTimeInSeconds = 600,
