@@ -20,6 +20,7 @@ namespace WindowsFormsApp1
         private static int currentImageIndex = 2;
         private static LockScreenConfig config = ConfigManager.LoadConfig();
         private Timer timer;
+        private Timer timer2;
         private Image nextImage;
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -38,6 +39,7 @@ namespace WindowsFormsApp1
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(Keys vKey);
         private TextBox _passwordBox;
+
         public Form2()
         {
             InitializeComponent();
@@ -182,11 +184,7 @@ namespace WindowsFormsApp1
             };
 
             // 关键：强制获取焦点并选择文本
-            this.Shown += (s, e) =>
-            {
-                _passwordBox.Focus();
-                _passwordBox.SelectAll();
-            };
+
             //using (Passwordbox passwordForm = new Passwordbox())
             //{
             //    passwordForm.TopMost = true;
@@ -195,17 +193,19 @@ namespace WindowsFormsApp1
             //        this.Close();
             //    }
             //}
-            
             this.KeyPreview = true;
             this.Controls.Add(_passwordBox);
+            this.Shown += (s, e) =>
+            {
+                _passwordBox.Focus();
+                _passwordBox.SelectAll();
+            };
             _passwordBox.TextChanged += (s, e) =>
             {
-                 
                     if (_passwordBox != null && config.Password == _passwordBox.Text)
                     {
                         this.Close();
                     }
-                
             };
         }
 

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Reflection;
 using System.Diagnostics;
-using WindowsFormsApp1;
-using System.Reflection.Emit;
+
 namespace KeyHook
 {
     class KjjHook
@@ -28,28 +24,36 @@ namespace KeyHook
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(int vKey);
 
-        [DllImport("user32.dll")]
-        private static extern bool LockWorkStation();
-        private static bool _isLockScreenActive = false; //获取锁屏界面状况
-        private static bool _isUsewin = false; //获取锁屏界面状况
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
+        private const int WM_SYSKEYDOWN = 0x0104;
+
+        // Virtual Key Codes
         private const int VK_LWIN = 0x5B;
         private const int VK_RWIN = 0x5C;
-        private const int VK_LMENU = 0xA4;
-        private const int WM_SYSKEYDOWN = 0x0104;  // 系统按键按下事件
         private const int VK_MENU = 0x12;
+        private const int VK_F4 = 0x73;
+        private const int VK_TAB = 0x09;
+        private const int VK_L = 0x4C;
+
         private static IntPtr _hookHandle = IntPtr.Zero;
         private static LowLevelKeyboardProc _hookProc;
         private static DateTime _lastTriggerTime = DateTime.MinValue;
+
+        // 状态标志
+        private static bool _isLockScreenActive = false;
+        private static bool _shouldBlockWinKey = true;
+
         public static event Action OnWinLDetected;
+
         public static void InstallHook()
         {
             _hookProc = HookCallback;
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
             {
-                _hookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, _hookProc, GetModuleHandle(curModule.ModuleName), 0);
+                _hookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, _hookProc,
+                    GetModuleHandle(curModule.ModuleName), 0);
             }
         }
 
@@ -64,92 +68,88 @@ namespace KeyHook
             {
                 int vkCode = Marshal.ReadInt32(lParam);
 
-                // 优先处理锁屏状态下的拦截
+                // 锁屏状态拦截逻辑
                 if (_isLockScreenActive)
                 {
-                    // 拦截Win键（左右Win键分开检测）
-                   
-                    // 拦截Alt+tab（需同时检测Alt键状态）
-                    if (wParam == (IntPtr)WM_SYSKEYDOWN &&
-                        vkCode == (int)Keys.Tab &&
-                        (GetAsyncKeyState(VK_MENU) & 0x8000) != 0)
+                    // 拦截所有Win键操作
+                    //if (IsWinKey(vkCode))
+                    //{
+                    //    Console.WriteLine("拦截Win键");
+                    //    //return (IntPtr)1;
+                    //}
+                    // 拦截Alt组合键
+                    if (IsAltCombination(vkCode, wParam))
                     {
-                        Console.WriteLine("Alt+Tab拦截成功");
+                        Console.WriteLine("拦截Alt组合键");
                         return (IntPtr)1;
                     }
-                    if (wParam == (IntPtr)WM_SYSKEYDOWN &&
-                        vkCode == (int)Keys.F4 &&
-                        (GetAsyncKeyState(VK_MENU) & 0x8000) != 0)
-                    {
-                        Console.WriteLine("Alt+Tab拦截成功");
-                        return (IntPtr)1;
-                    }
-
-                    // 其他锁屏状态下的拦截逻辑...
                 }
-                else // 非锁屏状态逻辑
+                //正常状态逻辑
+                else
                 {
-                    // 检测 Win + L 组合键
-                    if (vkCode == (int)Keys.L && IsWinKeyPressed() &&
-                        wParam == (IntPtr)WM_KEYDOWN)
+                    // 检测Win+L组合键
+                    if (IsWinLCombination(vkCode, wParam))
                     {
-                        // 防抖逻辑
-                        if ((DateTime.Now - _lastTriggerTime).TotalMilliseconds < 500)
-                        {
-                            return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
-                        }
-                        _lastTriggerTime = DateTime.Now;
+                        if (ThrottleEvent()) return (IntPtr)1;
 
-                        // 清理按键状态
-                        //ReleaseAllModifierKeys();
-                         OnWinLDetected?.Invoke(); 
-                        // 触发自定义锁屏（不再调用系统锁屏）
-                        
-                        return (IntPtr)1; // 必须返回1以阻止系统处理
+                        OnWinLDetected?.Invoke();
+                        return (IntPtr)1;
                     }
                 }
             }
-
             return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
         }
 
-        private static bool IsWinKeyPressed()
+        #region 状态判断方法
+        private static bool IsWinKey(int vkCode) =>
+            vkCode == VK_LWIN || vkCode == VK_RWIN;
+
+        private static bool IsAltCombination(int vkCode, IntPtr wParam)
         {
-            Console.WriteLine("win键被按");
-            return (GetAsyncKeyState(VK_LWIN) & 0x8000) != 0 || (GetAsyncKeyState(VK_RWIN) & 0x8000) != 0;
+            // 检测Alt状态
+            bool altPressed = (GetAsyncKeyState(VK_MENU) & 0x8000) != 0;
+
+            return altPressed && (
+                (vkCode == VK_F4 && wParam == (IntPtr)WM_SYSKEYDOWN) ||  // Alt+F4
+                (vkCode == VK_TAB && wParam == (IntPtr)WM_SYSKEYDOWN)    // Alt+Tab
+            );
         }
-        private static bool IsAltKeyPressed()
+
+        private static bool IsWinLCombination(int vkCode, IntPtr wParam)
         {
-            Console.WriteLine("alt键被按");
-            return (GetAsyncKeyState(VK_LMENU) & 0x8000) != 0;
+            bool winPressed = (GetAsyncKeyState(VK_LWIN) & 0x8000) != 0 ||
+                            (GetAsyncKeyState(VK_RWIN) & 0x8000) != 0;
+
+            return vkCode == VK_L &&
+                   winPressed &&
+                   wParam == (IntPtr)WM_KEYDOWN;
         }
-        private static bool IsOtherKeyPressed()
+        #endregion
+
+        #region 辅助方法
+        private static bool ThrottleEvent()
         {
-            for (int key = 0; key < 256; key++)
-            {
-                if (key != VK_LWIN && key != VK_RWIN &&
-                    (GetAsyncKeyState(key) & 0x8000) != 0)
-                {
-                    return true;
-                }
-            }
+            // 500ms防抖
+            if ((DateTime.Now - _lastTriggerTime).TotalMilliseconds < 500)
+                return true;
+
+            _lastTriggerTime = DateTime.Now;
             return false;
         }
-        private static void ReleaseAllModifierKeys()
-        {
-            const int KEYEVENTF_KEYUP = 0x0002;
-            keybd_event((byte)VK_LWIN, 0, KEYEVENTF_KEYUP, 0);
-            keybd_event((byte)VK_RWIN, 0, KEYEVENTF_KEYUP, 0);
-            keybd_event((byte)Keys.L, 0, KEYEVENTF_KEYUP, 0);
-        }
-        public static void SetLockScreenState(bool isActive,bool isusewin)
+        #endregion
+
+        public static void SetLockScreenState(bool isActive)
         {
             _isLockScreenActive = isActive;
-            _isUsewin=isusewin;
+            // 锁屏时自动启用Win键拦截
+            _shouldBlockWinKey = isActive;
         }
-        [DllImport("user32.dll")]
-        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
+
+        // 添加以下方法用于安全释放资源
+        public static void Dispose()
+        {
+            UninstallHook();
+            _hookHandle = IntPtr.Zero;
+        }
     }
-
-
 }

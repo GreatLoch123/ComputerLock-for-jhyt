@@ -45,19 +45,21 @@ namespace WindowsFormsApp1
         private static LowLevelKeyboardProc _hookProc;
         private static DateTime _lastTriggerTime = DateTime.MinValue;
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             bool isOnlyInstance;
+            bool isRestart = args.Contains("/restart");
             using (Mutex mutex = new Mutex(true, "WindowsFormsApp1_LockScreen", out isOnlyInstance))
             {
+
                 // 如果不是唯一实例，直接退出程序
-                if (!isOnlyInstance)
+                if (!isOnlyInstance && !isRestart)
                 {
                     MessageBox.Show("程序已在运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 KjjHook.InstallHook();
-                KjjHook.OnWinLDetected += ShowLockScreen;
+                KjjHook.OnWinLDetected += Test;
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 StartMonitor();
@@ -173,12 +175,15 @@ namespace WindowsFormsApp1
         private static void Test()
         {
             //KjjHook.UninstallHook();
-            KjjHook.SetLockScreenState(true,true);
+            KjjHook.SetLockScreenState(true);
             var uiThread = new Thread(() =>
             {
+                trayIcon.Visible = false;
                 var lockForm = new Form2();
                 Application.Run(lockForm); // 使用Application.Run保证消息循环
-                KjjHook.SetLockScreenState(false,false);
+                KjjHook.SetLockScreenState(false);
+                trayIcon.Visible = true;
+
             });
 
             uiThread.SetApartmentState(ApartmentState.STA);

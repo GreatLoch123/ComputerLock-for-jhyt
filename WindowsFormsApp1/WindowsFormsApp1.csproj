@@ -110,6 +110,7 @@
     <Compile Include="Form4.Designer.cs">
       <DependentUpon>Form4.cs</DependentUpon>
     </Compile>
+    <Compile Include="RegisterHotKey.cs" />
     <Compile Include="KjjHook.cs" />
     <Compile Include="KeyboardHook.cs" />
     <Compile Include="Passwordbox.cs">

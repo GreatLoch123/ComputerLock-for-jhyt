@@ -55,10 +55,10 @@ namespace WindowsFormsApp1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button1.Font = new System.Drawing.Font("宋体", 10F);
-            this.button1.Location = new System.Drawing.Point(38, 160);
+            this.button1.Location = new System.Drawing.Point(51, 200);
             this.button1.Margin = new System.Windows.Forms.Padding(1);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(86, 34);
+            this.button1.Size = new System.Drawing.Size(115, 42);
             this.button1.TabIndex = 2;
             this.button1.Text = "修改密码";
             this.button1.UseVisualStyleBackColor = false;
@@ -68,10 +68,10 @@ namespace WindowsFormsApp1
             // 
             this.button2.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button2.Font = new System.Drawing.Font("宋体", 10F);
-            this.button2.Location = new System.Drawing.Point(258, 160);
+            this.button2.Location = new System.Drawing.Point(344, 200);
             this.button2.Margin = new System.Windows.Forms.Padding(1);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(86, 34);
+            this.button2.Size = new System.Drawing.Size(115, 42);
             this.button2.TabIndex = 3;
             this.button2.Text = "找回密码";
             this.button2.UseVisualStyleBackColor = false;
@@ -88,7 +88,8 @@ namespace WindowsFormsApp1
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 9F);
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(254, 29);
+            this.label1.Location = new System.Drawing.Point(339, 36);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(127, 15);
             this.label1.TabIndex = 7;
@@ -96,9 +97,10 @@ namespace WindowsFormsApp1
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(38, 20);
+            this.pictureBox1.Location = new System.Drawing.Point(51, 25);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(33, 33);
+            this.pictureBox1.Size = new System.Drawing.Size(44, 41);
             this.pictureBox1.TabIndex = 8;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
@@ -108,7 +110,8 @@ namespace WindowsFormsApp1
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 10F);
             this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label2.Location = new System.Drawing.Point(78, 31);
+            this.label2.Location = new System.Drawing.Point(104, 39);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(76, 17);
             this.label2.TabIndex = 9;
@@ -118,7 +121,8 @@ namespace WindowsFormsApp1
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 10F);
-            this.label3.Location = new System.Drawing.Point(79, 96);
+            this.label3.Location = new System.Drawing.Point(105, 120);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(110, 17);
             this.label3.TabIndex = 11;
@@ -126,9 +130,10 @@ namespace WindowsFormsApp1
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(39, 85);
+            this.pictureBox2.Location = new System.Drawing.Point(52, 106);
+            this.pictureBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(33, 33);
+            this.pictureBox2.Size = new System.Drawing.Size(44, 41);
             this.pictureBox2.TabIndex = 10;
             this.pictureBox2.TabStop = false;
             this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
@@ -137,7 +142,8 @@ namespace WindowsFormsApp1
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 10F);
-            this.label4.Location = new System.Drawing.Point(295, 31);
+            this.label4.Location = new System.Drawing.Point(393, 39);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 17);
             this.label4.TabIndex = 13;
@@ -147,7 +153,8 @@ namespace WindowsFormsApp1
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 9F);
             this.label5.ForeColor = System.Drawing.Color.Red;
-            this.label5.Location = new System.Drawing.Point(255, 79);
+            this.label5.Location = new System.Drawing.Point(340, 99);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(127, 15);
             this.label5.TabIndex = 15;
@@ -164,9 +171,10 @@ namespace WindowsFormsApp1
             "5分钟",
             "10分钟",
             "30分钟"});
-            this.metroComboBox2.Location = new System.Drawing.Point(257, 99);
+            this.metroComboBox2.Location = new System.Drawing.Point(343, 124);
+            this.metroComboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.metroComboBox2.Name = "metroComboBox2";
-            this.metroComboBox2.Size = new System.Drawing.Size(99, 27);
+            this.metroComboBox2.Size = new System.Drawing.Size(131, 27);
             this.metroComboBox2.Style = MetroFramework.MetroColorStyle.Black;
             this.metroComboBox2.TabIndex = 14;
             this.metroComboBox2.UseSelectable = true;
@@ -184,19 +192,20 @@ namespace WindowsFormsApp1
             "5分钟",
             "10分钟",
             "30分钟"});
-            this.metroComboBox1.Location = new System.Drawing.Point(258, 48);
+            this.metroComboBox1.Location = new System.Drawing.Point(344, 60);
+            this.metroComboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.metroComboBox1.Name = "metroComboBox1";
-            this.metroComboBox1.Size = new System.Drawing.Size(99, 27);
+            this.metroComboBox1.Size = new System.Drawing.Size(131, 27);
             this.metroComboBox1.TabIndex = 17;
             this.metroComboBox1.UseSelectable = true;
             this.metroComboBox1.SelectedIndexChanged += new System.EventHandler(this.metroComboBox1_SelectedIndexChanged_1);
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(400, 218);
+            this.ClientSize = new System.Drawing.Size(533, 272);
             this.Controls.Add(this.metroComboBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.metroComboBox2);
@@ -212,6 +221,7 @@ namespace WindowsFormsApp1
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(1);
             this.Name = "Form1";
+            this.ShowInTaskbar = false;
             this.Text = "油田总医院锁屏V1.4";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);

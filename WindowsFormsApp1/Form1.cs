@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -68,7 +69,23 @@ namespace WindowsFormsApp1
             // 判断用户点击的是否为"确定"
             if (result == DialogResult.OK)
             {
-                Application.Restart();
+                try
+                {
+                    // 启动新进程
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = Application.ExecutablePath,
+                        Arguments = "/restart",  // 添加重启标识参数
+                        UseShellExecute = true
+                    });
+
+                    // 立即关闭当前进程
+                    Application.Exit();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"重启失败: {ex.Message}");
+                }
                 // 点击确定后执行的代码
                 return true;
                 // 示例：调用删除文件的方法
