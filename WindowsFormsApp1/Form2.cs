@@ -17,7 +17,7 @@ namespace WindowsFormsApp1
         private static LowLevelKeyboardProc _keyboardProc;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_SYSKEYDOWN = 0x0104;
-        private static int currentImageIndex = 2;
+        private static int currentImageIndex;
         private static LockScreenConfig config = ConfigManager.LoadConfig();
         private Timer timer;
         private Timer timer2;
@@ -39,7 +39,8 @@ namespace WindowsFormsApp1
         [DllImport("user32.dll")]
         private static extern short GetAsyncKeyState(Keys vKey);
         private TextBox _passwordBox;
-
+        private Label _hintLabel;
+        private static readonly Random _random = new Random();
         public Form2()
         {
             InitializeComponent();
@@ -98,7 +99,8 @@ namespace WindowsFormsApp1
 
         public void change_bz()
         {
-            string imagePath = @"resources/1.png";
+            currentImageIndex = _random.Next(1, 19);
+            string imagePath = @"resources/"+currentImageIndex+".png";
             timer = new Timer();
             timer.Interval = config.WallpaperChangeIntervalInSeconds * 1000;
             timer.Tick += (s, e) =>
@@ -169,7 +171,7 @@ namespace WindowsFormsApp1
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
             this.BackColor = Color.Black;
-
+           
             // 密码输入框
             _passwordBox = new TextBox
             {
@@ -182,7 +184,15 @@ namespace WindowsFormsApp1
                     (this.Height - 40) / 2
                 )
             };
-
+            _hintLabel = new Label
+            {
+                Text = "点击输入密码解锁设备",
+                Font = new Font("微软雅黑", 20),
+                ForeColor = Color.Red,
+                //BackColor = Color.Transparent,
+                Location = new Point((this.Width - 280) / 2, _passwordBox.Top - 40),
+                AutoSize = true
+            };
             // 关键：强制获取焦点并选择文本
 
             //using (Passwordbox passwordForm = new Passwordbox())
@@ -194,6 +204,7 @@ namespace WindowsFormsApp1
             //    }
             //}
             this.KeyPreview = true;
+            this.Controls.Add(_hintLabel);
             this.Controls.Add(_passwordBox);
             this.Shown += (s, e) =>
             {
