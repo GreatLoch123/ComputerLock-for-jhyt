@@ -14,7 +14,7 @@ namespace KeyHook
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         // 常量定义
-        private const uint MOD_WIN = 0x0008;
+        private const uint MOD_ALT = 0x0001;
         private const uint VK_L = 0x4C;
         private const int HOTKEY_ID = 0x3000;
 
@@ -24,7 +24,7 @@ namespace KeyHook
         public SecureHotKey(IntPtr hWnd)
         {
             _windowHandle = hWnd;
-            if (!RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_WIN, VK_L))
+            if (!RegisterHotKey(_windowHandle, HOTKEY_ID, MOD_ALT, VK_L))
             {
                 throw new ApplicationException("热键注册失败，可能需要管理员权限");
             }

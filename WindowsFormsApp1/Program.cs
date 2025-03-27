@@ -35,7 +35,6 @@ namespace WindowsFormsApp1
 
         [DllImport("user32.dll")]
         private static extern bool LockWorkStation();
-
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int VK_LWIN = 0x5B;
@@ -44,6 +43,9 @@ namespace WindowsFormsApp1
         private static IntPtr _hookHandle = IntPtr.Zero;
         private static LowLevelKeyboardProc _hookProc;
         private static DateTime _lastTriggerTime = DateTime.MinValue;
+        private static readonly UserActivityMonitor _monitor = new UserActivityMonitor();
+        private static HotKeyManager _hotKeyManager;
+        private static LockKeyboardHook _lockHook;
         [STAThread]
         static void Main(string[] args)
         {
@@ -58,17 +60,21 @@ namespace WindowsFormsApp1
                     MessageBox.Show("程序已在运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                KjjHook.InstallHook();
-                KjjHook.OnWinLDetected += Test;
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                StartMonitor();
-                ShowSingleInstanceForm<Form1>();
+                _lockHook = new LockKeyboardHook();
+                    // 初始化热键管理器
+                _monitor.Initialize(3); // 10分钟无操作锁定
+                _monitor.OnIdle += Monitor_OnIdle;
+                _monitor.Start();
+                //ShowSingleInstanceForm<Form1>();
+
                 //ConfigManager.SaveConfig(new LockScreenConfig
                 //{
                 //    LockTimeInSeconds = 600,
                 //    Password = "1"
                 //});
+                lockScreenForm = new Form2();
                 using ( trayIcon = new NotifyIcon())
                 {
                     trayIcon.Icon = new Icon("Resources/icon.ico"); // 替换为自定义图标
@@ -79,10 +85,11 @@ namespace WindowsFormsApp1
                     ContextMenu trayMenu = new ContextMenu();
                     trayMenu.MenuItems.Add("锁屏", (sender, e) =>
                     {
-                        KjjHook.UninstallHook();
-                        lockScreenForm = new Form2();
-                        lockScreenForm.Show();
-                        KjjHook.InstallHook();
+                        ////KjjHook.UninstallHook();
+                        //lockScreenForm = new Form2();
+                        //lockScreenForm.Show();
+                        LockSystem();
+                        //KjjHook.InstallHook();
                     });
                     trayMenu.MenuItems.Add("退出", (sender, e) =>
                     {
@@ -104,56 +111,19 @@ namespace WindowsFormsApp1
                 }
             }
         }
-        public static void InstallHook()
+        private static void LockSystem()
         {
-            _hookProc = HookCallback;
-            using (Process curProcess = Process.GetCurrentProcess())
-            using (ProcessModule curModule = curProcess.MainModule)
+            
+            _lockHook.SetLockState(true);
+            // 显示锁屏界面
+            var lockForm = new Form2();
+            lockForm.FormClosed += (s, e) =>
             {
-                _hookHandle = SetWindowsHookEx(WH_KEYBOARD_LL, _hookProc, GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
-        public static void UninstallHook()
-        {
-            UnhookWindowsHookEx(_hookHandle);
-        }
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
-            {
-                int vkCode = Marshal.ReadInt32(lParam);
-
-                // 检测 Win + L
-                if (vkCode == (int)Keys.L && IsWinKeyPressed())
-                {
-                    // 防抖：500ms 内只触发一次
-                    if ((DateTime.Now - _lastTriggerTime).TotalMilliseconds < 500)
-                    {
-
-                        return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
-                    }
-                    _lastTriggerTime = DateTime.Now;
-
-                    // 阻止系统处理 Win+L
-                    UninstallHook(); // 先卸载钩子，防止后续冲突
-
-                    // 显示自定义锁屏界面（确保在 UI 线程中操作）
-                    Form2 _lockScreenForm = new Form2();
-                    _lockScreenForm.FormClosed += (s, e) => InstallHook(); // 界面关闭后重新安装钩子
-                    _lockScreenForm.Show();
-
-                    // 返回 1 表示已处理该事件，阻止系统进一步处理
-                    return (IntPtr)1;
-
-                }
-            }
-            return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
+                _lockHook.SetLockState(false);
+            };
+            lockForm.ShowDialog();
         }
 
-        private static bool IsWinKeyPressed()
-        {
-            return (GetAsyncKeyState(VK_LWIN) & 0x8000) != 0 || (GetAsyncKeyState(VK_RWIN) & 0x8000) != 0;
-        }
         private static void ShowSingleInstanceForm<T>() where T : Form1, new()
         {
             // 检查当前是否已有指定类型的窗体打开
@@ -174,16 +144,16 @@ namespace WindowsFormsApp1
         //测试
         private static void Test()
         {
-            //KjjHook.UninstallHook();
-            KjjHook.SetLockScreenState(true);
+            ////KjjHook.UninstallHook();
+            //KjjHook.SetLockScreenState(true);
             var uiThread = new Thread(() =>
             {
                 trayIcon.Visible = false;
                 var lockForm = new Form2();
                 Application.Run(lockForm); // 使用Application.Run保证消息循环
-                KjjHook.SetLockScreenState(false);
+                //KjjHook.InstallHook();
+                //KjjHook.SetLockScreenState(false);
                 trayIcon.Visible = true;
-
             });
 
             uiThread.SetApartmentState(ApartmentState.STA);
@@ -192,34 +162,45 @@ namespace WindowsFormsApp1
         // 显示锁屏窗体
         private static void ShowLockScreen()
         {
-            try
+            if (lockScreenForm != null && !lockScreenForm.IsDisposed)
             {
-                
-                // 如果锁屏窗体不存在或已被释放，则创建新的实例
-                if (lockScreenForm == null || lockScreenForm.IsDisposed)
+                if (lockScreenForm.InvokeRequired)
                 {
-                    KjjHook.UninstallHook();
-                    SettingForm.Close();
-                    lockScreenForm = new Form2();
-                    lockScreenForm.FormClosing += (s, e) =>
-                    {
-                        lockScreenForm = null; // 清空引用
-                    };
-                    lockScreenForm.FormClosed += (s, e) =>
-                    {
-                        StartMonitor();
-                        KjjHook.InstallHook();
-                    };
+                    lockScreenForm.Invoke(new Action(() => lockScreenForm.Show()));
                 }
-
-                if (!lockScreenForm.Visible)
+                else
                 {
                     lockScreenForm.Show();
                 }
+                return;
             }
-            catch (Exception ex)
+
+            // 创建新窗体时确保在UI线程
+            Form mainForm = Application.OpenForms.Cast<Form>().FirstOrDefault();
+            if (mainForm != null && mainForm.InvokeRequired)
             {
-                MessageBox.Show($"锁屏窗口显示错误：{ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                mainForm.BeginInvoke(new Action(() =>
+                {
+                    ////KjjHook.UninstallHook();
+                    SettingForm?.Close();
+                    lockScreenForm = new Form2();
+                    lockScreenForm.FormClosed += (s, e) =>
+                    {
+                        //KjjHook.InstallHook();
+                    };
+                    lockScreenForm.Show();
+                }));
+            }
+            else
+            {
+                ////KjjHook.UninstallHook();
+                SettingForm?.Close();
+                lockScreenForm = new Form2();
+                lockScreenForm.FormClosed += (s, e) =>
+                {
+                    //KjjHook.InstallHook();
+                };
+                lockScreenForm.Show();
             }
         }
 
@@ -242,21 +223,17 @@ namespace WindowsFormsApp1
         }
 
         // 重置无操作计时器
-        private static void StartMonitor()
+        private static void Monitor_OnIdle(object sender, EventArgs e)
         {
-            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-            UserActivityMonitor Monitor = new UserActivityMonitor();
-            Monitor.Init(config.LockTimeInSeconds);
-
-            // 注册空闲事件
-            Monitor.OnIdle += (sender, e) =>
-            {
-                KjjHook.UninstallHook();
-                ShowLockScreen();
-                KjjHook.InstallHook();
-                Monitor.Dispose();
-            };
-            Monitor.StartMonitoring();
+            // 获取主窗体（隐藏的）
+            Console.WriteLine("触发成功");
+            _monitor.Stop();
+            Form2 fa = new Form2();
+            fa.ShowDialog();
+            _monitor.Start();
         }
+
+
+
     }
 }

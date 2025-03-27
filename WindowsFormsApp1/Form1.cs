@@ -173,7 +173,7 @@ namespace WindowsFormsApp1
             {
                 if (this.metroComboBox1.SelectedIndex == 0)
                 {
-                    Updatetime(300,0);
+                    Updatetime(10,0);
                     restart_confirm();
                 }
                 if (this.metroComboBox1.SelectedIndex == 1)
@@ -191,7 +191,7 @@ namespace WindowsFormsApp1
         }
         private int  ReturnMinits(int times)
         {
-            if (times == 300)
+            if (times == 10)
             {
                 return 0;
             }
@@ -219,7 +219,7 @@ namespace WindowsFormsApp1
             {
                 if (this.metroComboBox2.SelectedIndex == 0)
                 {
-                    Updatetime(300, 1);
+                    Updatetime(10, 1);
                     restart_confirm();
                 }
                 if (this.metroComboBox2.SelectedIndex == 1)

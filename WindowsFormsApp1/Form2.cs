@@ -74,11 +74,11 @@ namespace WindowsFormsApp1
                 {
                     return (IntPtr)1; // 阻止系统处理
                 }
-                // 拦截Alt+tab
-                //if (vkCode == (int)Keys.Tab && (IsAltKeyPressed()))
-                //{
-                //    return (IntPtr)1; // 阻止系统处理
-                //}
+                //拦截Alt + tab
+                if (vkCode == (int)Keys.Tab && (IsAltKeyPressed()))
+                {
+                    return (IntPtr)1; // 阻止系统处理
+                }
 
                 //// 拦截Win键（左右Win键分开检测）
                 //if (vkCode == (int)Keys.LWin || vkCode == (int)Keys.RWin)
@@ -102,7 +102,7 @@ namespace WindowsFormsApp1
             currentImageIndex = _random.Next(1, 19);
             string imagePath = @"resources/"+currentImageIndex+".png";
             timer = new Timer();
-            timer.Interval = config.WallpaperChangeIntervalInSeconds * 1000;
+            timer.Interval = config.WallpaperChangeIntervalInSeconds * 100;
             timer.Tick += (s, e) =>
             {
                 UpdateWallpaper();
@@ -215,6 +215,7 @@ namespace WindowsFormsApp1
             {
                     if (_passwordBox != null && config.Password == _passwordBox.Text)
                     {
+                        
                         this.Close();
                     }
             };

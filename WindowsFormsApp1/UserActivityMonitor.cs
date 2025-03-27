@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -10,86 +11,138 @@ namespace ComputerLock.Hooks
         [DllImport("user32.dll")]
         private static extern bool GetLastInputInfo(ref LastInputInfo plii);
 
-        struct LastInputInfo
+        private struct LastInputInfo
         {
             public uint cbSize;
             public uint dwTime;
         }
 
         private Timer _timer;
-        public EventHandler OnIdle;
+        private int _autoLockMilliseconds;
+        private int _isMonitoring; // 0:停止监控, 1:正在监控
+        private readonly ISynchronizeInvoke _syncObject;
 
-        private int _autoLockMillisecond;
-        private bool _isMonitoring = false;
+        public event EventHandler OnIdle;
 
-        // 用于存储UI线程上下文
-        private SynchronizationContext _syncContext;
-
-        public void Init(int autoLockSecond)
+        public UserActivityMonitor(ISynchronizeInvoke syncObject = null)
         {
-            _autoLockMillisecond = autoLockSecond * 1000;
-
-            // 获取当前线程的同步上下文
-            _syncContext = SynchronizationContext.Current;
-            Console.WriteLine("定时器");
-            // 使用 System.Threading.Timer 替代 System.Timers.Timer
-            _timer = new Timer(TimerCallback, null, Timeout.Infinite, 1000); // 每秒触发一次
+            _syncObject = syncObject ?? new WindowsFormsSynchronizationProvider();
         }
 
-        public void StartMonitoring()
+        public void Initialize(int idleSeconds)
         {
-            _isMonitoring = true;
-            _timer?.Change(0, 1000);
-            Console.WriteLine("开始监控用户活动");
+            if (idleSeconds <= 0)
+                throw new ArgumentException("空闲时间必须大于0秒");
+
+            _autoLockMilliseconds = idleSeconds * 1000;
+            _timer = new Timer(TimerCallback, null, Timeout.Infinite, 5000);
         }
 
-        public void StopMonitoring()
+        public void Start()
         {
-            _isMonitoring = false;
-            _timer?.Change(Timeout.Infinite, 1000);
-            Console.WriteLine("停止监控用户活动");
+            if (Interlocked.CompareExchange(ref _isMonitoring, 1, 0) == 0)
+            {
+                _timer.Change(0, 5000);
+                DebugLog("开始用户活动监控");
+            }
         }
 
-        // 定时器回调函数
+        public void Stop()
+        {
+            if (Interlocked.CompareExchange(ref _isMonitoring, 0, 1) == 1)
+            {
+                _timer.Change(Timeout.Infinite, Timeout.Infinite);
+                DebugLog("停止用户活动监控");
+            }
+        }
+
         private void TimerCallback(object state)
         {
-
-            if (!_isMonitoring)
-            {
-                Console.WriteLine("检测到用户空闲超过设定时间");
-
+            if (Interlocked.CompareExchange(ref _isMonitoring, 0, 0) == 0)
                 return;
-            }
 
-            var lastInputInfo = new LastInputInfo();
-            lastInputInfo.cbSize = (uint)Marshal.SizeOf(lastInputInfo);
-
-            if (GetLastInputInfo(ref lastInputInfo))
+            try
             {
-                long elapsedMillisecond = Environment.TickCount - (int)lastInputInfo.dwTime;
-
-                // TickCount 可能会溢出，需考虑这一点
-                if (elapsedMillisecond > _autoLockMillisecond)
+                var lastInput = new LastInputInfo
                 {
-                    Console.WriteLine("检测到用户空闲超过设定时间");
+                    cbSize = (uint)Marshal.SizeOf(typeof(LastInputInfo))
+                };
 
-                    // 在 UI 线程上触发 OnIdle 事件
-                    if (_syncContext != null)
+                if (!GetLastInputInfo(ref lastInput)) return;
+
+                // 处理TickCount溢出（约49.7天循环一次）
+                var elapsed = (Environment.TickCount - (int)lastInput.dwTime) & 0x7FFFFFFF;
+
+                if (elapsed > _autoLockMilliseconds)
+                {
+                    DebugLog($"检测到系统空闲：{elapsed}ms");
+                    Stop();
+
+                    // 使用异步委托触发事件
+                    var handler = OnIdle;
+                    if (handler != null)
                     {
-                        Console.WriteLine("触发 OnIdle 事件");
-                        _syncContext.Post(_ => OnIdle?.Invoke(this, EventArgs.Empty), null);
-                    }
-                    else
-                    {
-                        Console.WriteLine("同步上下文为空，无法触发事件");
+                        _syncObject.BeginInvoke(new Action(() =>
+                        {
+                            try
+                            {
+                                handler(this, EventArgs.Empty);
+                            }
+                            catch (Exception ex)
+                            {
+                                DebugLog($"事件处理异常：{ex.Message}");
+                            }
+                        }), null);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                DebugLog($"定时器回调异常：{ex.Message}");
             }
         }
 
         public void Dispose()
         {
+            Stop();
             _timer?.Dispose();
+            DebugLog("监控资源已释放");
+        }
+
+        private static void DebugLog(string message)
+        {
+#if DEBUG
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss.fff}] {message}");
+#endif
+        }
+
+        // Windows Forms同步上下文包装器
+        private class WindowsFormsSynchronizationProvider : ISynchronizeInvoke
+        {
+            public IAsyncResult BeginInvoke(Delegate method, object[] args)
+            {
+                if (Application.OpenForms.Count > 0)
+                {
+                    return Application.OpenForms[0].BeginInvoke(method, args);
+                }
+                return method.Method.Invoke(method.Target, args) as IAsyncResult;
+            }
+
+            public object EndInvoke(IAsyncResult result)
+            {
+                return result.AsyncState;
+            }
+
+            public object Invoke(Delegate method, object[] args)
+            {
+                if (Application.OpenForms.Count > 0)
+                {
+                    return Application.OpenForms[0].Invoke(method, args);
+                }
+                return method.Method.Invoke(method.Target, args);
+            }
+
+            public bool InvokeRequired => Application.OpenForms.Count > 0 && Application.OpenForms[0].InvokeRequired;
         }
     }
 }
