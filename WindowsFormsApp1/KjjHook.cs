@@ -130,13 +130,20 @@ namespace KeyHook
                 int vkCode = Marshal.ReadInt32(lParam);
 
                 if (IsWinKey(vkCode)) return (IntPtr)1;
-                if (IsAltCombination(vkCode, wParam)) return (IntPtr)1;
+                if (IsF4Key(vkCode)) return (IntPtr)1;
+                if (IsTabKey(vkCode)) return (IntPtr)1;
+
+                //if (IsAltCombination(vkCode, wParam)) return (IntPtr)1;
             }
             return CallNextHookEx(_hookHandle, nCode, wParam, lParam);
         }
 
         private bool IsWinKey(int vkCode) =>
             vkCode == 0x5B || vkCode == 0x5C;
+        private bool IsF4Key(int vkCode) =>
+            vkCode == 0x73;
+        private bool IsTabKey(int vkCode) =>
+            vkCode == 0x09;
 
         private bool IsAltCombination(int vkCode, IntPtr wParam)
         {

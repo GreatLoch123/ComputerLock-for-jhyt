@@ -70,11 +70,11 @@ namespace WindowsFormsApp1
             // 配置文件不存在或格式错误，写入默认配置
             var defaultConfig = new LockScreenConfig
             {
-                LockTimeInSeconds = 300, // 默认锁屏时间
+                LockTimeInSeconds = 180, // 默认锁屏时间
                 Password = "1", // 默认密码
                 UseSystemLock = false, // 默认不使用系统锁屏
                 AutoStart = true,
-                WallpaperChangeIntervalInSeconds = 300 // 默认壁纸切换时间
+                WallpaperChangeIntervalInSeconds = 180 // 默认壁纸切换时间
             };
 
             SaveConfig(defaultConfig); // 写入默认配置

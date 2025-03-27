@@ -58,13 +58,14 @@ namespace WindowsFormsApp1
                 if (!isOnlyInstance && !isRestart)
                 {
                     MessageBox.Show("程序已在运行！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            
                     return;
                 }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                _lockHook = new LockKeyboardHook();
-                    // 初始化热键管理器
-                _monitor.Initialize(3); // 10分钟无操作锁定
+                //_lockHook = new LockKeyboardHook();
+              
+            _monitor.Initialize(config.LockTimeInSeconds); // 10分钟无操作锁定
                 _monitor.OnIdle += Monitor_OnIdle;
                 _monitor.Start();
                 //ShowSingleInstanceForm<Form1>();
@@ -101,10 +102,14 @@ namespace WindowsFormsApp1
                     {
                         if (e.Button == MouseButtons.Left)
                         {
-                            ShowSingleInstanceForm<Form1>();
+      
+                                // 如果未打开，则创建新实例并显示
+                                SettingForm = new Form1();
+                                SettingForm.Show();
                         }
                     };
                     trayIcon.ContextMenu = trayMenu;
+                    _lockHook = new LockKeyboardHook();
 
                     // 运行消息循环
                     Application.Run();
@@ -228,8 +233,7 @@ namespace WindowsFormsApp1
             // 获取主窗体（隐藏的）
             Console.WriteLine("触发成功");
             _monitor.Stop();
-            Form2 fa = new Form2();
-            fa.ShowDialog();
+            LockSystem();
             _monitor.Start();
         }
 
