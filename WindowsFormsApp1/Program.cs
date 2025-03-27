@@ -109,7 +109,24 @@ namespace WindowsFormsApp1
                         }
                     };
                     trayIcon.ContextMenu = trayMenu;
-                    _lockHook = new LockKeyboardHook();
+                    using (var hiddenForm = new Form())
+                    {
+                        hiddenForm.ShowInTaskbar = false;
+                        hiddenForm.Size = Size.Empty;
+                        hiddenForm.Opacity = 0;
+                        hiddenForm.ControlBox = false;
+                        // 初始化热键管理器
+                        _hotKeyManager = new HotKeyManager(hiddenForm.Handle);
+                        _hotKeyManager.HotKeyPressed += () =>
+                        {
+                            LockSystem();
+                        };
+
+                        // 初始化锁屏钩子
+                        _lockHook = new LockKeyboardHook();
+
+                        Application.Run(hiddenForm);
+                    }
 
                     // 运行消息循环
                     Application.Run();
