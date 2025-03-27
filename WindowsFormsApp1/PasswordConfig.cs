@@ -10,12 +10,14 @@ namespace WindowsFormsApp1
         public bool UseSystemLock { get; set; } // 是否使用系统锁屏
         public bool AutoStart { get; set; }
         public int WallpaperChangeIntervalInSeconds { get; set; } // 壁纸切换时间（秒）
+
+        public bool Isfirst { get; set; } // 壁纸切换时间（秒）
+
     }
 
     public static class ConfigManager
     {
         private static readonly string ConfigFilePath = "LockScreenConfig.txt";
-
         // 保存配置到文件
         public static void SaveConfig(LockScreenConfig config)
         {
@@ -26,7 +28,9 @@ namespace WindowsFormsApp1
                     $"{config.Password}\n" +
                     $"{config.UseSystemLock}\n" +
                      $"{config.AutoStart}\n" +
-                    $"{config.WallpaperChangeIntervalInSeconds}");
+                    $"{config.WallpaperChangeIntervalInSeconds}\n" +
+                    $"{config.Isfirst}"
+                    );
                 Console.WriteLine("配置已保存");
             }
             catch (Exception ex)
@@ -43,11 +47,13 @@ namespace WindowsFormsApp1
                 if (File.Exists(ConfigFilePath))
                 {
                     string[] lines = File.ReadAllLines(ConfigFilePath);
-                    if (lines.Length >= 5 &&
+                    if (lines.Length >= 6 &&
                         int.TryParse(lines[0], out int lockTimeInSeconds) &&
                         bool.TryParse(lines[2], out bool useSystemLock) &&
                         bool.TryParse(lines[3], out bool autostart) &&
-                        int.TryParse(lines[4], out int wallpaperChangeIntervalInSeconds))
+                        int.TryParse(lines[4], out int wallpaperChangeIntervalInSeconds) &&
+                        bool.TryParse(lines[5], out bool Isfirst)
+                        )
                     {
                         return new LockScreenConfig
                         {
@@ -56,6 +62,7 @@ namespace WindowsFormsApp1
                             UseSystemLock = useSystemLock,
                             AutoStart = autostart,
                             WallpaperChangeIntervalInSeconds = wallpaperChangeIntervalInSeconds
+
                         };
                     }
                 }
@@ -74,7 +81,8 @@ namespace WindowsFormsApp1
                 Password = "1", // 默认密码
                 UseSystemLock = false, // 默认不使用系统锁屏
                 AutoStart = true,
-                WallpaperChangeIntervalInSeconds = 180 // 默认壁纸切换时间
+                WallpaperChangeIntervalInSeconds = 180, // 默认壁纸切换时间
+                Isfirst=true
             };
 
             SaveConfig(defaultConfig); // 写入默认配置

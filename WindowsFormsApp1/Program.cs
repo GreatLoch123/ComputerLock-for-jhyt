@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using FormsTimer = System.Windows.Forms.Timer;
 using System.Threading;
 using KeyHook;
+using System.IO;
 using Microsoft.Win32; //写入注册表时要用到
 using ComputerLock.Hooks;
 using System.Linq;
@@ -46,11 +47,18 @@ namespace WindowsFormsApp1
         private static readonly UserActivityMonitor _monitor = new UserActivityMonitor();
         private static HotKeyManager _hotKeyManager;
         private static LockKeyboardHook _lockHook;
+        private static regedit_edit Regedit_Edit = new regedit_edit();
         [STAThread]
         static void Main(string[] args)
         {
             bool isOnlyInstance;
             bool isRestart = args.Contains("/restart");
+            if (config.Isfirst)
+            {
+                Regedit_Edit.chkAutoStart_CheckedChanged(true);
+                config.Isfirst = false;
+                ConfigManager.SaveConfig(config);
+            }
             using (Mutex mutex = new Mutex(true, "WindowsFormsApp1_LockScreen", out isOnlyInstance))
             {
 
@@ -63,7 +71,7 @@ namespace WindowsFormsApp1
                 }
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                //_lockHook = new LockKeyboardHook();
+                _lockHook = new LockKeyboardHook();
               
             _monitor.Initialize(config.LockTimeInSeconds); // 10分钟无操作锁定
                 _monitor.OnIdle += Monitor_OnIdle;
@@ -109,24 +117,24 @@ namespace WindowsFormsApp1
                         }
                     };
                     trayIcon.ContextMenu = trayMenu;
-                    using (var hiddenForm = new Form())
-                    {
-                        hiddenForm.ShowInTaskbar = false;
-                        hiddenForm.Size = Size.Empty;
-                        hiddenForm.Opacity = 0;
-                        hiddenForm.ControlBox = false;
-                        // 初始化热键管理器
-                        _hotKeyManager = new HotKeyManager(hiddenForm.Handle);
-                        _hotKeyManager.HotKeyPressed += () =>
-                        {
-                            LockSystem();
-                        };
+                    //using (var hiddenForm = new Form())
+                    //{
+                    //    hiddenForm.ShowInTaskbar = false;
+                    //    hiddenForm.Size = Size.Empty;
+                    //    hiddenForm.Opacity = 0;
+                    //    hiddenForm.ControlBox = false;
+                    //    // 初始化热键管理器
+                    //    _hotKeyManager = new HotKeyManager(hiddenForm.Handle);
+                    //    _hotKeyManager.HotKeyPressed += () =>
+                    //    {
+                    //        LockSystem();
+                    //    };
 
-                        // 初始化锁屏钩子
-                        _lockHook = new LockKeyboardHook();
+                    //    // 初始化锁屏钩子
+                    //    _lockHook = new LockKeyboardHook();
 
-                        Application.Run(hiddenForm);
-                    }
+                    //    Application.Run(hiddenForm);
+                    //}
 
                     // 运行消息循环
                     Application.Run();
