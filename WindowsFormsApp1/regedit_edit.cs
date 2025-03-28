@@ -1,8 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.IO;
 using System.Diagnostics;
 using System.Reflection;
 using System.Security;
+using System.Security.AccessControl;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -17,23 +19,27 @@ namespace WindowsFormsApp1
         private static int currentImageIndex = 2;
         private static LockScreenConfig config = ConfigManager.LoadConfig();
         // 开机自启控制
+        string exePath = $"\"{Application.ExecutablePath}\"";
         public void chkAutoStart_CheckedChanged(bool Isswitch)
         {
+            string currentDirectory = System.IO.Directory.GetCurrentDirectory();
+            //获取自启动文件夹的路径
+            string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            string shortcutPath = currentDirectory + "\\ComputerLock_Jhyt.exe.lnk";
+            string destinationPath = Path.Combine(startupFolderPath, "ComputerLock_Jhyt.exe.lnk");
             try
-            {
-                string exePath = $"\"{Application.ExecutablePath}\"";
-                using (RegistryKey runKey = Registry.CurrentUser.CreateSubKey(RUN_REGISTRY_KEY))
+            { 
                 {
                     if (Isswitch)
                     {
-                        runKey.SetValue(APP_NAME, exePath);
-                        Console.WriteLine("添加自启成功");
-                        Console.WriteLine(APP_NAME);
+                            ///动态获取程序的相对路径
+                        Console.WriteLine("自启成功");
 
+                        File.Copy(shortcutPath, destinationPath, true);
                     }
                     else
                     {
-                        runKey.DeleteValue(APP_NAME, false);
+                        File.Delete(destinationPath);
                         Console.WriteLine("删除自启成功");
                     }
                 }

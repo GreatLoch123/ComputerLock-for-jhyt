@@ -53,12 +53,7 @@ namespace WindowsFormsApp1
         {
             bool isOnlyInstance;
             bool isRestart = args.Contains("/restart");
-            if (config.Isfirst)
-            {
-                Regedit_Edit.chkAutoStart_CheckedChanged(true);
-                config.Isfirst = false;
-                ConfigManager.SaveConfig(config);
-            }
+          
             using (Mutex mutex = new Mutex(true, "WindowsFormsApp1_LockScreen", out isOnlyInstance))
             {
 
@@ -72,12 +67,16 @@ namespace WindowsFormsApp1
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
                 _lockHook = new LockKeyboardHook();
-              
-            _monitor.Initialize(config.LockTimeInSeconds); // 10分钟无操作锁定
+                if (config.Isfirst)
+                {
+                    Regedit_Edit.chkAutoStart_CheckedChanged(true);
+                    config.Isfirst = false;
+                    ConfigManager.SaveConfig(config);
+                }
+                _monitor.Initialize(config.LockTimeInSeconds); // 10分钟无操作锁定
                 _monitor.OnIdle += Monitor_OnIdle;
                 _monitor.Start();
-                //ShowSingleInstanceForm<Form1>();
-
+                ShowSingleInstanceForm<Form1>();
                 //ConfigManager.SaveConfig(new LockScreenConfig
                 //{
                 //    LockTimeInSeconds = 600,

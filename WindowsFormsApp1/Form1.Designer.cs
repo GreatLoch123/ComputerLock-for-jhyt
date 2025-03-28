@@ -168,7 +168,7 @@ namespace WindowsFormsApp1
             this.metroComboBox2.FormattingEnabled = true;
             this.metroComboBox2.ItemHeight = 21;
             this.metroComboBox2.Items.AddRange(new object[] {
-            "5分钟",
+            "3分钟",
             "10分钟",
             "30分钟"});
             this.metroComboBox2.Location = new System.Drawing.Point(343, 124);
@@ -189,7 +189,7 @@ namespace WindowsFormsApp1
             this.metroComboBox1.FormattingEnabled = true;
             this.metroComboBox1.ItemHeight = 21;
             this.metroComboBox1.Items.AddRange(new object[] {
-            "5分钟",
+            "3分钟",
             "10分钟",
             "30分钟"});
             this.metroComboBox1.Location = new System.Drawing.Point(344, 60);
